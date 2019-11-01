@@ -10,7 +10,7 @@ def create_db(db_file):
 
         create_table_target_type = """CREATE TABLE IF NOT EXISTS target_type_table(
                                         targetID integer primary key AUTOINCREMENT,
-                                        targetname text NOT NULL                            
+                                        targetname text NOT NULL UNIQUE                            
                             ); """
         cur.execute(create_table_target_type)
         print('create_table_target_type!')
@@ -23,7 +23,8 @@ def create_db(db_file):
                                         password text NOT NULL,
                                         email text NOT NULL UNIQUE,
                                         priority integer NOT NULL,
-                                        user_studying_phase text
+                                        user_studying_phase text,
+                                        user_status text NOT NULL
                                         ); """
         cur.execute(create_table_user)
         print('create_table_user!')

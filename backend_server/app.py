@@ -38,10 +38,13 @@ if __name__ == '__main__':
     from authRoutes import api as ns1
     from postRoutes import api as ns2
     from commentRoutes import api as ns3
+    from newsRoutes import api as ns4
 
     api.add_namespace(ns1)
     api.add_namespace(ns2)
     api.add_namespace(ns3)
+    api.add_namespace(ns4)
+
 
 
     app.run()

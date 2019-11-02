@@ -2,10 +2,13 @@ from sqlalchemy import create_engine, MetaData,Table, Column, Integer, String, F
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from models import *
-
+from courseCSVImporter import *
+from newsCSVImporter import *
 
 db.metadata.create_all(db.engine)
 DBSession = sessionmaker(bind=db.engine)
 session = DBSession()
+newsImporter()
+courseImporter()
 session.commit()
 session.close()

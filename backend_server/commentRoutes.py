@@ -6,9 +6,8 @@ from flask_restplus import Api, Resource, fields, Namespace
 from forms import *
 import redis
 
-host = '127.0.0.1'
-port = 6379
-rd = redis.Redis(host=host, port=port)
+from rediesConnecter import rd
+
 
 from flask_jwt_extended import (
     JWTManager, create_access_token, create_refresh_token, get_jti,
@@ -39,6 +38,17 @@ class AddComment(Resource):
         except:
             return {"message": "bad payload"}, 400
         return {"cid":comment.commentId},201
+def commentExporter(comment):
+    return {"commentId":comment.commentId,
+                "authorId":comment.authorId,
+                "content":comment.content,
+                "date":comment.date.timestamp(),
+                "authorType":comment.authorType,
+                "authorName":comment.authorName,
+                "reply_to":comment.reply_to
+        }
+
+
 
 @api.route('/<int:cid>')
 class EditComment(Resource):
@@ -77,19 +87,15 @@ class EditComment(Resource):
             return {"message": "bad payload"}, 400
 
     def get(self,cid):
+        result = []
         try:
-            comment = Comment.query.filter_by(reply_to=cid).first()
+            comment_list = Comment.query.filter_by(reply_to=cid)
+            for comment in comment_list:
+                result.append(commentExporter(comment))
 
         except:
             return {"message": "bad payload"}, 400
-        return {"commentId":comment.commentId,
-                "authorId":comment.authorId,
-                "content":comment.content,
-                "date":comment.date.timestamp(),
-                "authorType":comment.authorType,
-                "authorName":comment.authorName,
-                "reply_to":comment.reply_to
-        },200
+        return result,200
 @api.route('/users/<int:uid>')
 class EditComment(Resource):
     @jwt_required

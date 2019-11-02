@@ -1,5 +1,5 @@
 from flask import request,jsonify
-from globals import *
+import globals
 import json
 from flask_restplus import Api, Resource, fields, Namespace
 from forms import *

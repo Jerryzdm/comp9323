@@ -75,5 +75,19 @@ class EditComment(Resource):
             db.session.commit()
         except:
             return {"message": "bad payload"}, 400
+    def get(self,cid):
+        try:
+            comment = Comment.quert.filter_by(commentId=cid).first()
+        except:
+            return {"message": "bad payload"}, 400
+        return {"commentId":comment.commentId,
+                "authorId":comment.authorId,
+                "content":comment.content,
+                "date":comment.date.timestamp(),
+                "authorType":comment.authorType,
+                "authorName":comment.authorName,
+                "reply_to":comment.reply_to
+        },200
+
 api.add_resource(AddComment, '')
 

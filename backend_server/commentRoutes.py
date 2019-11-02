@@ -101,7 +101,6 @@ class EditComment(Resource):
 class EditComment(Resource):
     @jwt_required
     @api.param("Authorization", _in='header')
-    @api.expect(resource_fields)
     def get(self,uid):
         result = []
         try:

@@ -44,7 +44,8 @@ class Login(Resource):
         revoked_store.set(refresh_jti, 'false', REFRESH_EXPIRES * 1.2)
         return {
                    'access_token': access_token,
-                   'refresh_token': refresh_token
+                   'refresh_token': refresh_token,
+                    'uid':user.id
                }, 200
 
 

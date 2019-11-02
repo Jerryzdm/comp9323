@@ -83,4 +83,5 @@ def return_10_news():
     #print(all_news_list)
     #print("Well done!")
     return all_news_list
+print(return_10_news())
 

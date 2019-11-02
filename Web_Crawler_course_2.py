@@ -115,6 +115,6 @@ if __name__ == '__main__':
         new_dict['url_core'].append(all_url_list[k]['url_core'].strip())
 
     data = pd.DataFrame.from_dict(new_dict)
-    #print(data)
-    #data.to_csv(path+'course.csv')
+    print(data)
+    data.to_csv('course.csv')
     print("Well done!")

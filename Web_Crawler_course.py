@@ -141,8 +141,9 @@ def get_course_list(html_text):
 
 def sccc():
     url = 'https://www.handbook.unsw.edu.au/undergraduate/programs/2020/3778?browseByInterest=cd74ce13db96df002e4c126b3a96194f&'
-    path = 'C:/Users/lenovo/Desktop/COMP9323'
+    path = './COMP9323'
 
     html_text = get_html(url)
     all_url_list = get_course_list(html_text)
     return all_url_list
+print(sccc())

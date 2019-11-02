@@ -49,3 +49,21 @@ class Comment(db.Model):
     authorType = Column(Integer, default=0)
     authorName = Column(String(64))
     reply_to = Column(Integer)
+
+class Course(db.Model):
+    __tablename__ = 'courses'
+    courseId = Column(Integer,primary_key=True,autoincrement=True)
+    courseCode = Column(String(20),unique=True)
+    courseName = Column(String(128))
+    courseUrl = Column(Text)
+    courseUOC = Column(Integer)
+    repeateCourse = Column(Text)
+
+class News(db.Model):
+    __tablename__ = 'news'
+    newsId = Column(Integer,primary_key=True,autoincrement=True)
+    newsTitle = Column(String(20),unique=True)
+    newsDate = Column(DateTime, default=datetime.now)
+    courseUrl = Column(Text)
+    courseUOC = Column(Integer)
+    repeateCourse = Column(Text)

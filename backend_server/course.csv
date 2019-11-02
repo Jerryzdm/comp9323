@@ -1,0 +1,126 @@
+index,course_code,course_uoc,course_name,url_core,repeate_course
+1,ACCT5922,6,E-Business: Strategy and Processes,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/ACCT5922/,
+2,BINF9010,6,Applied Bioinformatics,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/BINF9010/,
+3,BINF9020,6,Computational Bioinformatics,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/BINF9020/,
+4,COMP1511,6,Programming Fundamentals,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP1511/,
+5,COMP1521,6,Computer Systems Fundamentals,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP1521/,
+6,COMP1531,6,Software Engineering Fundamentals,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP1531/,
+7,COMP2121,6,Microprocessors and Interfacing,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP2121/,Microprocessors and Interfacing
+8,COMP2511,6,Object-Oriented Design & Programming,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP2511/,
+9,COMP2521,6,Data Structures and Algorithms,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP2521/,Data Structures and Algorithms
+10,COMP3121,6,Algorithms and Programming Techniques,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3121/,
+11,COMP3131,6,Programming Languages and Compilers,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3131/,Programming Languages and Compilers
+12,COMP3141,6,Software System Design and Implementation,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3141/,
+13,COMP3151,6,Foundations of Concurrency,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3151/,Foundations of Concurrency
+14,COMP3161,6,Concepts of Programming Languages,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3161/,Concepts of Programming Languages
+15,COMP3211,6,Computer Architecture,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3211/,Computer Architecture
+16,COMP3222,6,Digital Circuits and Systems,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3222/,Digital Circuits and Systems
+17,COMP3231,6,Operating Systems,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3231/,Operating Systems
+18,COMP3311,6,Database Systems,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3311/,Database Systems
+19,COMP3331,6,Computer Networks and Applications,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3331/,Computer Networks and Applications
+20,COMP3411,6,Artificial Intelligence,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3411/,Artificial Intelligence
+21,COMP3431,6,Robotic Software Architecture,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3431/,Robotic Software Architecture
+22,COMP3511,6,Human Computer Interaction,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3511/,Human Computer Interaction
+23,COMP3601,6,Design Project A,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3601/,
+24,COMP3900,6,Computer Science Project,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP3900/,
+25,COMP4121,6,Advanced and Parallel Algorithms,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP4121/,
+26,COMP4141,6,Theory of Computation,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP4141/,
+27,COMP4161,6,Advanced Topics in Software Verification,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP4161/,
+28,COMP4336,6,Mobile Data Networking,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP4336/,Mobile Data Networking
+29,COMP4337,6,Securing Fixed and Wireless Networks,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP4337/,Securing Fixed and Wireless Networks
+30,COMP4418,6,Knowledge Representation and Reasoning,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP4418/,
+31,COMP4601,6,Design Project B,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP4601/,
+32,COMP4920,6,Management and Ethics,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP4920/,
+33,COMP6324,6,Internet of Things Service Design and Engineering,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP6324/,
+34,COMP6441,6,Security Engineering and Cyber Security,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP6441/,
+35,COMP6443,6,Web Application Security and Testing,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP6443/,
+36,COMP6445,6,Digital Forensics,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP6445/,
+37,COMP6447,6,System and Software Security Assessment,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP6447/,
+38,COMP6448,6,Security Engineering Masterclass,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP6448/,
+39,COMP6449,6,Security Engineering Professional Practice,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP6449/,
+40,COMP6452,6,Software Architecture for Blockchain Applications,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP6452/,
+41,COMP6714,6,Information Retrieval and Web Search,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP6714/,
+42,COMP6733,6,Internet of Things Experimental Design Studio,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP6733/,
+43,COMP6741,6,Parameterized and Exact Computation,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP6741/,
+44,COMP6752,6,Modelling Concurrent Systems,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP6752/,
+45,COMP6771,6,Advanced C++ Programming,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP6771/,
+46,COMP6841,6,Extended Security Engineering and Cyber Security,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP6841/,
+47,COMP6843,6,Extended Web Application Security and Testing,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP6843/,
+48,COMP6845,6,Extended Digital Forensics and Incident Response,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP6845/,
+49,COMP9020,6,Foundations of Computer Science,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9020/,
+50,COMP9021,6,Principles of Programming,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9021/,
+51,COMP9024,6,Data Structures and Algorithms,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9024/,Data Structures and Algorithms
+52,COMP9032,6,Microprocessors and Interfacing,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9032/,Microprocessors and Interfacing
+53,COMP9044,6,Software Construction: Techniques and Tools,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9044/,
+54,COMP9101,6,Design and Analysis of Algorithms,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9101/,
+55,COMP9102,6,Programming Languages and Compilers,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9102/,Programming Languages and Compilers
+56,COMP9153,6,Algorithmic Verification,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9153/,
+57,COMP9154,6,Foundations of Concurrency,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9154/,Foundations of Concurrency
+58,COMP9164,6,Concepts of Programming Languages,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9164/,Concepts of Programming Languages
+59,COMP9201,6,Operating Systems,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9201/,Operating Systems
+60,COMP9211,6,Computer Architecture,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9211/,Computer Architecture
+61,COMP9222,6,Digital Circuits and Systems,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9222/,Digital Circuits and Systems
+62,COMP9242,6,Advanced Operating Systems,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9242/,
+63,COMP9243,6,Distributed Systems,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9243/,
+64,COMP9283,6,Extended Operating Systems,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9283/,
+65,COMP9311,6,Database Systems,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9311/,Database Systems
+66,COMP9313,6,Big Data Management,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9313/,
+67,COMP9315,6,Database Systems Implementation,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9315/,
+68,COMP9318,6,Data Warehousing and Data Mining,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9318/,
+69,COMP9319,6,Web Data Compression and Search,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9319/,
+70,COMP9321,6,Data Services Engineering,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9321/,
+71,COMP9322,6,Software Service Design and Engineering,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9322/,
+72,COMP9323,6,Software as a Service Project,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9323/,
+73,COMP9331,6,Computer Networks and Applications,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9331/,Computer Networks and Applications
+74,COMP9332,6,Network Routing and Switching,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9332/,
+75,COMP9334,6,Capacity Planning of Computer Systems and Networks,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9334/,
+76,COMP9336,6,Mobile Data Networking,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9336/,Mobile Data Networking
+77,COMP9337,6,Securing Fixed and Wireless Networks,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9337/,Securing Fixed and Wireless Networks
+78,COMP9414,6,Artificial Intelligence,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9414/,Artificial Intelligence
+79,COMP9415,6,Computer Graphics,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9415/,
+80,COMP9417,6,Machine Learning and Data Mining,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9417/,
+81,COMP9418,6,Advanced Topics in Statistical Machine Learning,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9418/,
+82,COMP9434,6,Robotic Software Architecture,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9434/,Robotic Software Architecture
+83,COMP9444,6,Neural Networks and Deep Learning,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9444/,
+84,COMP9447,6,Security Engineering Workshop,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9447/,
+85,COMP9511,6,Human Computer Interaction,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9511/,Human Computer Interaction
+86,COMP9517,6,Computer Vision,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/COMP9517/,
+87,COMP9801,6,Extended Design & Analysis of Algorithms,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9801/,
+88,COMP9814,6,Extended Artificial Intelligence,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9814/,
+89,COMP9900,6,Information Technology Project,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9900/,
+90,COMP9991,6,Research Project A,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9991/,
+91,COMP9992,6,Research Project B,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9992/,
+92,COMP9993,6,Research Project C,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/COMP9993/,
+93,ENGG3060,6,Maker Games,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/ENGG3060/,
+94,GEOS9016,6,Principles of Geographic Information Systems and Science,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GEOS9016/,
+95,GMAT9200,6,Principles of GPS Positioning,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GMAT9200/,
+96,GMAT9205,6,Fundamentals of Geopositioning,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GMAT9205/,
+97,GMAT9211,6,Modern Geodesy and Applications,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GMAT9211/,
+98,GMAT9300,6,Aerial and Satellite Imaging Systems,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GMAT9300/,
+99,GMAT9600,6,Principles of Remote Sensing,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GMAT9600/,
+100,GMAT9606,6,Microwave Remote Sensing,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GMAT9606/,
+101,GSOE9010,6,Engineering Postgraduate Coursework Research Skills,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GSOE9010/,Engineering Postgraduate Coursework Research Skills
+102,GSOE9011,6,Engineering Postgraduate Coursework Research Skills,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GSOE9011/,Engineering Postgraduate Coursework Research Skills
+103,GSOE9210,6,Engineering Decision Structures,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GSOE9210/,
+104,GSOE9220,6,Launching a Startup,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GSOE9220/,
+105,GSOE9758,6,Network Systems Architecture,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GSOE9758/,
+106,GSOE9820,6,Engineering Project Management,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/GSOE9820/,
+107,INFS5885,6,e-Business,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/INFS5885/,
+108,MARK5826,6,Product Analytics,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/MARK5826/,
+109,MARK5827,6,Customer Analytics,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/MARK5827/,
+110,MARK5828,6,Advertising Analytics,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/MARK5828/,
+111,MATH1081,6,Discrete Mathematics,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/MATH1081/,
+112,MATH3411,6,"Information, Codes and Ciphers",https://www.handbook.unsw.edu.au/undergraduate/courses/2020/MATH3411/,
+113,MATH5836,6,Data Mining and its Business Applications,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/MATH5836/,
+114,MATH5845,6,Time Series,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/MATH5845/,
+115,MATH5846,6,Introduction to Probability and Stochastic Processes,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/MATH5846/,
+116,MATH5855,6,Multivariate Analysis,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/MATH5855/,
+117,MATH5856,6,Introduction to Statistics and Statistical Computations,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/MATH5856/,
+118,MATH5905,6,Statistical Inference,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/MATH5905/,
+119,MATH5960,6,Bayesian Inference and Computation,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/MATH5960/,
+120,MBAX9117,6,E-Business Strategy & Management,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/MBAX9117/,
+121,TELE3119,6,Trusted Networks,https://www.handbook.unsw.edu.au/undergraduate/courses/2020/TELE3119/,
+122,TELE9751,6,Switching Systems Architecture,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/TELE9751/,
+123,TELE9752,6,Network Operations and Control,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/TELE9752/,
+124,TELE9753,6,Advanced Wireless Communications,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/TELE9753/,
+125,TELE9754,6,Coding and Information Theory,https://www.handbook.unsw.edu.au/postgraduate/courses/2020/TELE9754/,

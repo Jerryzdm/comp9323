@@ -5,6 +5,7 @@ from flask_restplus import Api, Resource, fields, Namespace
 from forms import *
 import redis
 from datetime import timedelta
+from models import *
 from app import jwt
 
 from flask_jwt_extended import (

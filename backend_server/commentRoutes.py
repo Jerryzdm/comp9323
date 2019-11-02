@@ -51,7 +51,7 @@ class EditComment(Resource):
             r = json.loads(r)
             current_user = get_jwt_identity()
             user = User.query.filter_by(username=current_user).first()
-            comment = Comment.quert.filter_by(commentId=cid).first()
+            comment = Comment.query.filter_by(commentId=cid).first()
             if user.id != comment.authorId:
                 return {"message": "bad userid"}, 400
             comment.content = r['content']
@@ -68,7 +68,7 @@ class EditComment(Resource):
             r = json.loads(r)
             current_user = get_jwt_identity()
             user = User.query.filter_by(username=current_user).first()
-            comment = Comment.quert.filter_by(commentId=cid).first()
+            comment = Comment.query.filter_by(commentId=cid).first()
             if user.id != comment.authorId:
                 return {"message": "bad userid"}, 400
             db.session.delete(comment)
@@ -78,7 +78,8 @@ class EditComment(Resource):
 
     def get(self,cid):
         try:
-            comment = Comment.quert.filter_by(reply_to=cid).first()
+            comment = Comment.query.filter_by(reply_to=cid).first()
+
         except:
             return {"message": "bad payload"}, 400
         return {"commentId":comment.commentId,

@@ -63,7 +63,8 @@ class News(db.Model):
     __tablename__ = 'news'
     newsId = Column(Integer,primary_key=True,autoincrement=True)
     newsTitle = Column(String(20),unique=True)
-    newsDate = Column(DateTime, default=datetime.now)
-    courseUrl = Column(Text)
-    courseUOC = Column(Integer)
-    repeateCourse = Column(Text)
+    newsDate = Column(String(50))
+    newsUrl = Column(Text)
+    newsStandfirst = Column(Text)
+
+

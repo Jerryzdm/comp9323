@@ -31,7 +31,9 @@ class Login(Resource):
         except:
             return {"t": "input"}, 400
         user = User.query.filter_by(username=username).first()
-        if not user.check_password(password):
+        if not user:
+            return {"message": "wrong username"}, 400
+        elif user and not user.check_password(password):
             return {"message": "wrong password"}, 400
         access_token = create_access_token(identity=json.loads(r)["username"])
         refresh_token = create_refresh_token(identity=json.loads(r)["username"])

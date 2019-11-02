@@ -62,8 +62,8 @@ class Course(db.Model):
 class News(db.Model):
     __tablename__ = 'news'
     newsId = Column(Integer,primary_key=True,autoincrement=True)
-    newsTitle = Column(String(20),unique=True)
-    newsDate = Column(String(50))
+    newsTitle = Column(String(100),unique=True)
+    newsDate = Column(String(20))
     newsUrl = Column(Text)
     newsStandfirst = Column(Text)
 

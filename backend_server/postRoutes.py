@@ -7,17 +7,15 @@ from forms import *
 from models import User
 import redis
 
-host = '127.0.0.1'
-port = 6379
-rd = redis.Redis(host=host, port=port)
+from rediesConnecter import rd
 
 from flask_jwt_extended import (
     JWTManager, create_access_token, create_refresh_token, get_jti,
     jwt_refresh_token_required, get_jwt_identity, jwt_required, get_raw_jwt,
 )
 api = Namespace('posts', description='post operations')
-resource_fields = api.model('post_form', post_form)
-resource_fields2 = api.model('post_form', tags_form)
+postForm = api.model('post_form', post_form)
+tagForm = api.model('post_form', tags_form)
 
 
 
@@ -47,7 +45,7 @@ class GetPost(Resource):
 
     @jwt_required
     @api.param("Authorization", _in='header')
-    @api.expect(resource_fields)
+    @api.expect(postForm)
     def put(self,pid):
         print(pid)
         post = Post.query.filter_by(postId=pid).first()
@@ -114,7 +112,7 @@ def jsontifyPost(post):
 
 @api.route('/tags')
 class GetPostByTags(Resource):
-    @api.expect(resource_fields2)
+    @api.expect(tagForm)
     def post(self):
         posts = []
         post_id_set = set()
@@ -158,7 +156,7 @@ class CreatePost(Resource):
         description="Import a collection from the data service\nthe <collection> is collections in url\nThe database contains a table called collections, which has five properties, the primary key type is int, the remaining properties are type text type, and the json of \"entries\" is stored as strings.")
     @jwt_required
     @api.param("Authorization", _in='header')
-    @api.expect(resource_fields)
+    @api.expect(postForm)
     def post(self):
         try:
             current_user = get_jwt_identity()
@@ -186,8 +184,5 @@ class CreatePost(Resource):
                 print(rd.smembers(e))
         except:
             return {"t": "input"}, 400
-
         return {'pid': new_post.postId,
                }, 201
-
-

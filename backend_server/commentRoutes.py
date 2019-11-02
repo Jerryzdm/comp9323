@@ -96,6 +96,7 @@ class EditComment(Resource):
         except:
             return {"message": "bad payload"}, 400
         return result,200
+
 @api.route('/users/<int:uid>')
 class EditComment(Resource):
     @jwt_required
@@ -104,7 +105,7 @@ class EditComment(Resource):
     def get(self,uid):
         result = []
         try:
-            comment_list = Comment.quert.filter_by(authorId=uid)
+            comment_list = Comment.query.filter_by(authorId=uid)
             for comment in comment_list:
                 result.append(commentExporter(comment))
         except:

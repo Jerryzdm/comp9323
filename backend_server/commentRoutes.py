@@ -75,9 +75,10 @@ class EditComment(Resource):
             db.session.commit()
         except:
             return {"message": "bad payload"}, 400
+
     def get(self,cid):
         try:
-            comment = Comment.quert.filter_by(commentId=cid).first()
+            comment = Comment.quert.filter_by(reply_to=cid).first()
         except:
             return {"message": "bad payload"}, 400
         return {"commentId":comment.commentId,
@@ -88,6 +89,26 @@ class EditComment(Resource):
                 "authorName":comment.authorName,
                 "reply_to":comment.reply_to
         },200
+@api.route('/users/<int:uid>')
+class EditComment(Resource):
+    @jwt_required
+    @api.param("Authorization", _in='header')
+    @api.expect(resource_fields)
+    def get(self,uid):
+        try:
+            r = request.data.decode()
+            r = json.loads(r)
+            current_user = get_jwt_identity()
+            user = User.query.filter_by(username=current_user).first()
+            comment = Comment.quert.filter_by(commentId=cid).first()
+            if user.id != comment.authorId:
+                return {"message": "bad userid"}, 400
+            comment.content = r['content']
+            db.session.commit()
+        except:
+            return {"message": "bad payload"}, 400
+
+
 
 api.add_resource(AddComment, '')
 

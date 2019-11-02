@@ -39,12 +39,13 @@ if __name__ == '__main__':
     from postRoutes import api as ns2
     from commentRoutes import api as ns3
     from newsRoutes import api as ns4
+    from courseRoutes import api as ns5
 
     api.add_namespace(ns1)
     api.add_namespace(ns2)
     api.add_namespace(ns3)
     api.add_namespace(ns4)
-
+    api.add_namespace(ns5)
 
 
     app.run()

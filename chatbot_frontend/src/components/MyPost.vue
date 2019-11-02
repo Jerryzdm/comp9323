@@ -1,4 +1,13 @@
 <template>
+  <div>
+
+    <div style="margin-left: 5%;margin-right: 5%;margin-top: -50px">
+      <login-header style="float: right;width: 50%;"></login-header>
+      <!--to clear the float-->
+      <div style="clear: both"></div>
+    </div>
+
+
   <div style="border: #ececec 1px solid;width: 100%;margin: 0 12px;">
     <!--title-->
     <div style="background-color: #ececec;width: 100%;text-align: left;height: 45px">
@@ -9,37 +18,50 @@
         itemLayout="horizontal"
         size="large"
         :pagination="pagination"
-        :dataSource="data1"
+        :dataSource="postdata"
       >
         <a-list-item slot="renderItem" slot-scope="item, index">
           <a slot="actions">details</a>
           <a slot="actions">delete</a>
 
           <a-list-item-meta
-            :description="item.description"
+            :description="item.content"
           >
 
           </a-list-item-meta>
-          <div>time</div>
+          <div>{{item.date|dateformat('YYYY-MM-DD')}}</div>
         </a-list-item>
       </a-list>
     </div>
 
   </div>
+  </div>
 </template>
 
 <script>
+  import Cookies from 'js-cookie'
+  import LoginHeader from "./../components/LoginHeader"
   const data1 = [{id: '1', description: 'title', name: 'name', price: 'price', rating: 'rating'}]
   export default {
+    components: {LoginHeader},
     data() {
       return {
-        data1,
+        postdata:[],
         pagination: {
           pageSize: 5,
           showTotal: total => total > 1 ? 'Total ' + total + ' news' : 'Total ' + total + ' news'
-
         },
       }
+    },
+    mounted() {
+      this.axios.get("/comments/users/"+Cookies.get("uid"),{
+        headers:{
+          'Authorization':Cookies.get('access_token')
+        }
+      }).then((res)=>{
+        this.postdata = res.data
+        console.log(res.data)
+      })
     }
   }
 </script>

@@ -7,16 +7,13 @@
 
 
 
-    <a-list itemLayout="horizontal" :dataSource="data1" :pagination="pagination">
+    <a-list itemLayout="horizontal" :dataSource="newsdata" :pagination="pagination">
       <a-list-item slot="renderItem" slot-scope="item, index">
+        <p slot="actions">{{item.newsDate}}</p>
         <a-list-item-meta
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+          :description="item.newsStandfirst"
         >
-          <a slot="title">{{item.description}}</a>
-          <a-avatar
-            slot="avatar"
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          />
+          <a slot="title" :href="item.newsUrl">{{item.newsTitle}}</a>
         </a-list-item-meta>
       </a-list-item>
     </a-list>
@@ -25,17 +22,23 @@
 </template>
 
 <script>
-  const data1 = [{id: '1', description: 'title', name: 'name', price: 'price', rating: 'rating'}]
+
   export default {
     data() {
       return {
-        data1,
+        newsdata:[],
         pagination: {
           pageSize: 5,
           showTotal: total => total > 1 ? 'Total ' + total + ' news' : 'Total ' + total + ' news'
 
         },
       }
+    },
+    mounted() {
+      this.axios.get("/news").then((res)=>{
+        this.newsdata = res.data
+        console.log(this.newsdata)
+      })
     }
   }
 </script>

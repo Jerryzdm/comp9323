@@ -4,10 +4,13 @@
     <div style="background-color: #ececec;height: 45px;width: 100%;text-align: left">
       <h2 style="padding: 6px 12px 0 12px;color: #484848">Course</h2>
     </div>
-    <a-list :grid="{ gutter: 16, column: 3 }" :dataSource="data" style="margin-top: 20px;margin-right: 20px;margin-left: 20px">
+    <a-list :grid="{ gutter: 16, column: 3 }" :dataSource="coursedata" :pagination="course_pagination" style="margin-top: 20px;margin-right: 20px;margin-left: 20px">
       <a-list-item slot="renderItem" slot-scope="item, index">
-        <a-card :title="item.title">
-          <a slot="actions">Details</a>
+        <a-card :title="item.courseCode">
+          <p>{{item.courseCode}}</p>
+          <p>{{item.courseName}}</p>
+          <p>{{item.courseUOC}}</p>
+          <a slot="actions" :href="item.courseUrl">Details</a>
           <a slot="actions" @click="show_reviews(item.title)">Review</a>
         </a-card>
       </a-list-item>
@@ -52,7 +55,6 @@
 </template>
 
 <script>
-  const data1 =[{id:'1',title:'title',time:'time',number:'number'},{id:'2',title:'title2',time:'time2',number:'number2'}]
   const data = [
     {
       title: 'COMP9021',
@@ -70,10 +72,14 @@
   export default {
     data(){
       return{
-        data1,
         data,
+        coursedata:[],
         pagination: {
           pageSize: 5,
+          showTotal: total => total > 1 ? 'Total ' + total + ' courses' : 'Total ' + total + ' course'
+        },
+        course_pagination: {
+          pageSize: 6,
           showTotal: total => total > 1 ? 'Total ' + total + ' courses' : 'Total ' + total + ' course'
         },
         course_visible:false,
@@ -94,6 +100,12 @@
       handleSubmit(){
 
       }
+    },
+    mounted() {
+      this.axios.get("/course").then((res)=>{
+        this.coursedata = res.data
+        console.log(res.data)
+      })
     }
   }
 </script>

@@ -24,10 +24,10 @@
         itemLayout="horizontal"
         size="large"
         :pagination="pagination"
-        :dataSource="data1"
+        :dataSource="postdata"
       >
-        <a-list-item slot="renderItem" slot-scope="item, index" @click="post_detail(item.postId)">
-          <p slot="actions">{{item.date}}</p>
+        <a-list-item slot="renderItem" slot-scope="item, index" @click="post_detail(index)">
+          <p slot="actions">{{item.date|dateformat('YYYY-MM-DD HH:mm')}}</p>
 
           <a-list-item-meta
             :description="item.title"
@@ -61,14 +61,14 @@
         itemLayout="horizontal"
         size="large"
         :pagination="pagination"
-        :dataSource="data1"
+        :dataSource="all_review"
       >
         <a-list-item slot="renderItem" slot-scope="item, index">
-          <p slot="actions">{{item.date}}</p>
+          <p slot="actions">{{item.date|dateformat('YYYY-MM-DD HH:mm')}}</p>
           <a-list-item-meta
             :description="item.content"
           >
-            <p slot="title">{{item.title}}&nbsp;&nbsp;{{item.authorName}}</p>
+            <p slot="title">{{item.authorName}}</p>
           </a-list-item-meta>
 
         </a-list-item>
@@ -92,13 +92,14 @@
 
 <script>
   import Cookies from 'js-cookie'
-  import moment from 'moment'
-  const data1 = []
+  const postdata = []
   const dataildata = {}
+
   export default {
     data(){
       return{
-        data1,
+        postdata,
+        postdata_tmp:[],
         dataildata,
         pagination: {
           pageSize: 5,
@@ -114,13 +115,21 @@
         selectedTags: [],
         title:'' ,
         content:'',
-        addtag:[],
-        review:''
+        addtag:['Movies'],
+        review:'',
+        all_review:[]
+
       }
     },
     methods:{
-      post_detail(id){
-        this.dataildata = this.data1[id-1]
+      post_detail(index){
+        this.dataildata = this.postdata[index]
+        this.axios.get("/comments/"+this.dataildata.postId).then((res)=>{
+          if(res.status === 200){
+            this.all_review = res.data
+          }
+          console.log(this.all_review)
+        })
         this.post_visible = true
       },
 
@@ -138,6 +147,20 @@
           : selectedTags.filter(t => t !== tag);
         //console.log('You are interested in: ', nextSelectedTags);
         this.selectedTags = nextSelectedTags;
+        if(this.selectedTags.length === 0){
+          this.postdata = this.postdata_tmp
+        }else{
+          this.axios.post("/posts/tags",{
+            "tags":this.selectedTags
+          }).then((res)=>{
+            if(res.status === 201){
+              this.postdata = res.data
+              console.log(this.postdata)
+              console.log(this.postdata_tmp)
+              console.log(this.selectedTags.length)
+            }
+          })
+        }
       },
       handleaddTagChange(value) {
         this.addtag = [value]
@@ -145,12 +168,14 @@
       },
 
       addPost(){
-        this.add_visible = true
+        if(Cookies.get('access_token')){
+          this.add_visible = true
+        }else {
+          this.$message.warning('You haven\'t logged in yet!Please log in!');
+        }
       },
       //todo
       handleaddOk(){
-        console.log(this.title)
-        console.log(this.content)
         this.axios.post('/posts',{
           "title":this.title,
           "tags":this.addtag,
@@ -162,14 +187,43 @@
         }).then((res)=>{
           if(res.status === 201){
             console.log("创建成功")
+            this.axios.get("/posts/all").then((res)=>{
+              console.log(res.status)
+              console.log(res.data)
+              if(res.status === 201){
+                this.postdata = res.data
+                this.postdata_tmp = res.data
+                this.add_visible = false
+              }
+            })
           }
         })
-        this.add_visible = false
+
+
       },
       //todo
       handleSubmit(postId){
-        console.log(value)
+        console.log(this.review)
         console.log(postId)
+        this.axios.post("/comments",{
+          "content":this.review,
+          "reply_to":postId
+        },
+          {
+            headers:{
+              'Authorization':Cookies.get('access_token')
+            }
+          }).then((res)=>{
+            if(res.status === 201){
+              this.$message.success('Post successfully!');
+              console.log("评论成功")
+              this.add_visible = false
+            }else {
+              this.$message.error('Post failure!');
+            }
+        }).catch((e)=>{
+          this.$message.error('Post failure!');
+        })
 
       },
     },
@@ -178,7 +232,8 @@
         console.log(res.status)
         console.log(res.data)
         if(res.status === 201){
-          this.data1 = res.data
+          this.postdata = res.data
+          this.postdata_tmp = res.data
         }
       })
     }

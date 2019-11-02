@@ -102,18 +102,14 @@ class EditComment(Resource):
     @api.param("Authorization", _in='header')
     @api.expect(resource_fields)
     def get(self,uid):
+        result = []
         try:
-            comment = Comment.quert.filter_by(authorId=uid).first()
+            comment_list = Comment.quert.filter_by(authorId=uid)
+            for comment in comment_list:
+                result.append(commentExporter(comment))
         except:
             return {"message": "bad payload"}, 400
-        return {"commentId": comment.commentId,
-                "authorId": comment.authorId,
-                "content": comment.content,
-                "date": comment.date.timestamp(),
-                "authorType": comment.authorType,
-                "authorName": comment.authorName,
-                "reply_to": comment.reply_to
-                }, 200
+        return result, 200
 
 api.add_resource(AddComment, '')
 

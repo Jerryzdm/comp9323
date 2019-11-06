@@ -6,7 +6,7 @@
       <a-icon type="plus-circle" style="width: 10%;font-size: 40px" @click="addPost"/>
     </div>
 
-    <div>
+    <div style="text-align: left">
       <strong :style="{ marginRight: 8 }">Categories:</strong>
       <template v-for=" tag in tags">
         <a-checkable-tag
@@ -26,14 +26,14 @@
         :pagination="pagination"
         :dataSource="postdata"
       >
-        <a-list-item slot="renderItem" slot-scope="item, index" @click="post_detail(index)">
+        <a-list-item slot="renderItem" slot-scope="item, index" @click="post_detail(index)" style="text-align: left">
           <p slot="actions">{{item.date|dateformat('YYYY-MM-DD HH:mm')}}</p>
-
           <a-list-item-meta
-            :description="item.title"
+            :description="item.content"
           >
+            <a slot="title" style="font-size: 16px;font-weight: bold">{{item.title}}</a>
           </a-list-item-meta>
-          <div>{{item.content}}</div>
+
         </a-list-item>
       </a-list>
     </div>
@@ -64,7 +64,7 @@
         :dataSource="all_review"
       >
         <a-list-item slot="renderItem" slot-scope="item, index">
-          <p slot="actions">{{item.date|dateformat('YYYY-MM-DD HH:mm')}}</p>
+          <p >{{item.date|dateformat('YYYY-MM-DD HH:mm')}}</p>
           <a-list-item-meta
             :description="item.content"
           >
@@ -217,20 +217,21 @@
             if(res.status === 201){
               this.$message.success('Post successfully!');
               console.log("评论成功")
-              this.add_visible = false
+              this.review = ''
+              this.post_visible = false
             }else {
               this.$message.error('Post failure!');
+              this.post_visible = false
             }
         }).catch((e)=>{
-          this.$message.error('Post failure!');
+          this.$message.error('Post failure!You should login first.');
+          this.post_visible = false
         })
 
       },
     },
     mounted() {
       this.axios.get("/posts/all").then((res)=>{
-        console.log(res.status)
-        console.log(res.data)
         if(res.status === 201){
           this.postdata = res.data
           this.postdata_tmp = res.data

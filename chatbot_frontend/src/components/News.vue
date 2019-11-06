@@ -5,15 +5,13 @@
       <h2 style="padding: 6px 12px 0 12px;color: #484848">News</h2>
     </div>
 
-
-
-    <a-list itemLayout="horizontal" :dataSource="newsdata" :pagination="pagination">
+    <a-list itemLayout="horizontal" :dataSource="newsdata" :pagination="pagination" style="text-align: left">
       <a-list-item slot="renderItem" slot-scope="item, index">
         <p slot="actions">{{item.newsDate}}</p>
         <a-list-item-meta
           :description="item.newsStandfirst"
         >
-          <a slot="title" :href="item.newsUrl">{{item.newsTitle}}</a>
+          <a slot="title" :href="item.newsUrl" style="font-size: 16px;font-weight: bold">{{item.newsTitle}}</a>
         </a-list-item-meta>
       </a-list-item>
     </a-list>

@@ -6,8 +6,10 @@
 
       <a-dropdown v-if="user_show">
         <a class="ant-dropdown-link" href="#">
+          <!---->
+          <img src="../assets/User.png">
           <span v-text="show_username"/>
-          <a-icon type="down"/>
+          <!--<a-icon type="down"/>-->
         </a>
         <a-menu slot="overlay">
           <a-menu-item>
@@ -60,7 +62,7 @@
       return {
         size: 'large',
         username: '',
-        show_username:'',
+        show_username:Cookies.get('username'),
         password:'',
         user_show: false,
         login_visible:false,
@@ -87,31 +89,37 @@
 
       /*go to home page*/
       homepage() {
-        this.$router.push('/')
+        if(this.$route.path !== '/'){
+          this.$router.push('/')
+        }
       },
       /*logout and clear cookies*/
       logout() {
+
         Cookies.remove('access_token')//remove cookies
         Cookies.remove('username')
         Cookies.remove('uid')
         this.username = ''
         this.user_show = false
         //sessionStorage.removeItem('userinfo')//remove user information
-        //this.$router.push('/')
+        if(this.$route.path === '/myprofile'){
+          this.$router.push('/')
+        }
       },
       /*Determine if it's logged in*/
       isLogin() {
         if (Cookies.get('access_token') ) {
           this.user_show = true
           this.show_username = Cookies.get('username')
-          console.log('yonghuming'+this.username)
         } else {
           this.user_show = false
         }
       },
       /*go to profile page*/
       myprofile() {
-        this.$router.push('/myprofile')
+        if(this.$route.path !== '/myprofile'){
+          this.$router.push('/myprofile')
+        }
       },
 
 
@@ -121,22 +129,28 @@
           "username":this.username,
           "password":this.password
         }).then((response)=>{
+          console.log(this.username)
           if(response.status === 200){
             Cookies.set("access_token",'Bearer '+response.data.access_token)
             Cookies.set("username",this.username)
             Cookies.set("uid",response.data.uid)
             console.log('登陆成功')
             this.user_show = true
+            this.show_username = this.username
+            this.username = ''
+            this.password = ''
           }else{
             this.$message.error('Username or password is wrong!');
+            this.username = ''
+            this.password = ''
           }
           this.login_visible = false;
         }).catch((e)=>{
           this.$message.error('Username or password is wrong!');
+          this.username = ''
+          this.password = ''
         })
-        this.show_username = this.username
-        this.username = ''
-        this.password = ''
+
       },
       //todo
       handleSignup(){
@@ -153,25 +167,45 @@
               this.user_show = true
             }
             this.signup_visible = false;
+            this.sign_user_type = ''
+            this.sign_email = ''
+            this.sign_username = ''
+            this.sign_password = ''
+            this.sign_faculty = ''
+            this.sign_confirmpassword = ''
           }).catch((e)=>{
             this.$message.error('Username has been used!');
+            this.sign_user_type = ''
+            this.sign_email = ''
+            this.sign_username = ''
+            this.sign_password = ''
+            this.sign_faculty = ''
+            this.sign_confirmpassword = ''
           })
         }else{
           this.$message.error('Passwords are not same!');
           console.log("password are not same")
+          this.sign_user_type = ''
+          this.sign_email = ''
+          this.sign_username = ''
+          this.sign_password = ''
+          this.sign_faculty = ''
+          this.sign_confirmpassword = ''
         }
-        this.sign_user_type = ''
-        this.sign_email = ''
-        this.sign_username = ''
-        this.sign_password = ''
-        this.sign_faculty = ''
-        this.sign_confirmpassword = ''
+
 
       },
 
     },
     mounted: function () {
       this.isLogin();
+      if (Cookies.get('access_token') ) {
+        this.user_show = true
+        this.show_username = Cookies.get('username')
+        console.log('yonghuming'+Cookies.get('username'))
+      } else {
+        this.user_show = false
+      }
     }
   }
 </script>

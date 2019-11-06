@@ -6,6 +6,7 @@ import MyProfile from '@/components/MyProfile'
 Vue.use(Router)
 
 export default new Router({
+  mode:'history',//remove the '#' in the url
   routes: [
     {
       path: '/',
@@ -20,7 +21,10 @@ export default new Router({
     {
       path:'/myprofile',
       name:'MyProfile',
-      component:MyProfile
+      component:MyProfile,
+      meta:{
+        isLogin:true//do not need login
+      }
     },
   ]
 })

@@ -6,17 +6,15 @@
     </div>
     <a-list :grid="{ gutter: 16, column: 3 }" :dataSource="coursedata" :pagination="course_pagination" style="margin-top: 20px;margin-right: 20px;margin-left: 20px">
       <a-list-item slot="renderItem" slot-scope="item, index">
-        <a-card :title="item.courseCode">
-          <p>{{item.courseCode}}</p>
-          <p>{{item.courseName}}</p>
-          <p>{{item.courseUOC}}</p>
+        <a-card :title="item.courseCode" hoverable="true" style="border-radius: 15px;">
+         <!-- <p>{{item.courseCode}}</p>-->
+          <p style="height: 70px">{{item.courseName}}</p>
+          <p>{{item.courseUOC}} UOC</p>
           <a slot="actions" :href="item.courseUrl">Details</a>
           <a slot="actions" @click="show_reviews(item.title)">Review</a>
         </a-card>
       </a-list-item>
     </a-list>
-
-
 
     <!--  reviews pop up window-->
     <a-modal title="Reviews" v-model="course_visible" @ok="handleOk" okText="Close" >
@@ -45,7 +43,7 @@
           </a-form-item>
           <a-form-item>
             <a-button  @click="handleSubmit" type="primary">
-              Add Comment
+              Add Review
             </a-button>
           </a-form-item>
         </div>
@@ -55,24 +53,9 @@
 </template>
 
 <script>
-  const data = [
-    {
-      title: 'COMP9021',
-    },
-    {
-      title: 'COMP9020',
-    },
-    {
-      title: 'COMP9311',
-    },
-    {
-      title: 'COMP9331',
-    },
-  ];
   export default {
     data(){
       return{
-        data,
         coursedata:[],
         pagination: {
           pageSize: 5,

@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <div style="margin-left: 5%;margin-right: 5%;margin-top: -50px">
-      <login-header style="float: right;width: 50%;"></login-header>
-      <!--to clear the float-->
-      <div style="clear: both"></div>
-    </div>
+  <div><div style="margin-left: 5%;margin-right: 5%;margin-top: -50px">
+    <login-header style="float: right;width: 50%;"></login-header>
+    <!--to clear the float-->
+    <div style="clear: both"></div>
+  </div>
+
   <div style="margin-top: 20px">
     <a-layout>
       <a-layout-content style="padding: 50px 200px">

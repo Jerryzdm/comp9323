@@ -1,17 +1,8 @@
 <template>
-  <div>
-
-    <div style="margin-left: 5%;margin-right: 5%;margin-top: -50px">
-      <login-header style="float: right;width: 50%;"></login-header>
-      <!--to clear the float-->
-      <div style="clear: both"></div>
-    </div>
-
-
   <div style="border: #ececec 1px solid;width: 100%;margin: 0 12px;">
     <!--title-->
     <div style="background-color: #ececec;width: 100%;text-align: left;height: 45px">
-      <h2 style="padding: 6px 12px 0 12px;color: #484848">News</h2>
+      <h2 style="padding: 6px 12px 0 12px;color: #484848">Comments</h2>
     </div>
     <div style="margin-top: 20px;margin-bottom: 80px">
       <a-list
@@ -22,7 +13,7 @@
       >
         <a-list-item slot="renderItem" slot-scope="item, index">
           <a slot="actions">details</a>
-          <a slot="actions">delete</a>
+          <a slot="actions" @click="delete_comment(item)">delete</a>
 
           <a-list-item-meta
             :description="item.content"
@@ -35,13 +26,11 @@
     </div>
 
   </div>
-  </div>
 </template>
 
 <script>
   import Cookies from 'js-cookie'
   import LoginHeader from "./../components/LoginHeader"
-  const data1 = [{id: '1', description: 'title', name: 'name', price: 'price', rating: 'rating'}]
   export default {
     components: {LoginHeader},
     data() {
@@ -51,6 +40,30 @@
           pageSize: 5,
           showTotal: total => total > 1 ? 'Total ' + total + ' news' : 'Total ' + total + ' news'
         },
+      }
+    },
+    methods:{
+      delete_comment(item){
+        this.axios.delete('/comments/'+item.commentId,{
+          data:{
+            'content':item.content,
+            'reply_to':item.reply_to
+          },
+          headers:{
+            'Authorization':Cookies.get('access_token')
+          }
+        }).then((res)=>{
+          this.axios.get("/comments/users/"+Cookies.get("uid"),{
+            headers:{
+              'Authorization':Cookies.get('access_token')
+            }
+          }).then((res_delete)=>{
+            this.postdata = res_delete.data
+            console.log(res_delete.data)
+          })
+          this.$message.success('Deleting successfully!');
+          console.log('删除成功')
+        })
       }
     },
     mounted() {

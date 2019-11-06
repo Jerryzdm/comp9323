@@ -22,6 +22,21 @@ Vue.filter('dateformat', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
   return moment(dataStr).format(pattern)
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.meta.isLogin) {
+    if (Cookies.get('access_token')) {
+      next();
+    } else {
+      next({
+        path: '/',
+        query: {redirect: to.fullPath}
+      })
+    }
+  } else {
+    next()//do not need login
+  }
+});
+
 
 /* eslint-disable no-new */
 new Vue({

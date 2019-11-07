@@ -26,8 +26,9 @@
         :pagination="pagination"
         :dataSource="postdata"
       >
-        <a-list-item slot="renderItem" slot-scope="item, index" @click="post_detail(index)" style="text-align: left">
-          <p slot="actions">{{item.date|dateformat('YYYY-MM-DD HH:mm')}}</p>
+        <a-list-item slot="renderItem" slot-scope="item, index"  style="text-align: left;padding: 0 10px">
+          <p>{{item.date|dateformat('YYYY-MM-DD HH:mm')}}</p>
+          <p slot='actions' @click="post_detail(index)">Details</p>
           <a-list-item-meta
             :description="item.content"
           >

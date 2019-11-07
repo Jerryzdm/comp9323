@@ -4,14 +4,22 @@
     <div style="background-color: #ececec;height: 45px;width: 100%;text-align: left">
       <h2 style="padding: 6px 12px 0 12px;color: #484848">Course</h2>
     </div>
-    <a-list :grid="{ gutter: 16, column: 3 }" :dataSource="coursedata" :pagination="course_pagination" style="margin-top: 20px;margin-right: 20px;margin-left: 20px">
+    <div style="padding: 10px 20px;text-align: center">
+
+      <a-input placeholder="search course" v-model="search_course" style="float: left;width: 60%;margin-left: 15%"></a-input>
+      <a-button style="float: left;margin-left: 5px">Search</a-button>
+      <div style="clear: both"></div>
+    </div>
+    <a-list :grid="{ gutter: 16, column: 3 }" :dataSource="coursedata" :pagination="course_pagination" style="margin-top: 10px;margin-right: 20px;margin-left: 20px">
       <a-list-item slot="renderItem" slot-scope="item, index">
-        <a-card :title="item.courseCode" hoverable="true" style="border-radius: 15px;">
+        <a-card :title="item.courseCode"  style="border-radius: 15px;">
+
          <!-- <p>{{item.courseCode}}</p>-->
           <p style="height: 70px">{{item.courseName}}</p>
           <p>{{item.courseUOC}} UOC</p>
-          <a slot="actions" :href="item.courseUrl">Details</a>
-          <a slot="actions" @click="show_reviews(item.title)">Review</a>
+          <a slot="actions" :href="item.courseUrl" style="border-radius: 15px;">Details</a>
+          <a slot="actions" @click="show_reviews(item.title)" style="border-radius: 15px;">Review</a>
+          <a-switch slot="actions" checkedChildren="on" unCheckedChildren="off" :defaultChecked="false" />
         </a-card>
       </a-list-item>
     </a-list>
@@ -59,7 +67,7 @@
         coursedata:[],
         pagination: {
           pageSize: 5,
-          showTotal: total => total > 1 ? 'Total ' + total + ' courses' : 'Total ' + total + ' course'
+          showTotal: total => total > 1 ? 'Total ' + total + ' reviews' : 'Total ' + total + ' review'
         },
         course_pagination: {
           pageSize: 6,

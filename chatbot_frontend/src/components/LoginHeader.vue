@@ -23,6 +23,7 @@
           </a-menu-item>
         </a-menu>
       </a-dropdown>
+      <a-button  v-on:click="showchatbot" :size="size" style="margin-left: 20px">ChatBot</a-button>
     </a-row>
 
     <!--login pop-up windows-->
@@ -32,7 +33,14 @@
       <label>Password</label>
       <a-input size="large" type="password" v-model="password"></a-input>
     </a-modal>
-
+    <a-modal  v-model="chatbot_visible" @ok="handleClose" okText="Close" >
+    <iframe
+      allow="microphone;"
+      width="350"
+      height="430"
+      src="https://console.dialogflow.com/api-client/demo/embedded/bc743cc1-7917-475d-bd5e-8260fcf5e126">
+    </iframe>
+    </a-modal>
     <!--sign up pop-up windows-->
     <a-modal title="Sign up" v-model="signup_visible" @ok="handleSignup" okText="Sign up" >
       <label>Email address</label>
@@ -73,7 +81,7 @@
         sign_user_type:'',
         sign_password:'',
         sign_confirmpassword:'',
-
+        chatbot_visible:false
       }
     },
     methods: {
@@ -121,7 +129,9 @@
           this.$router.push('/myprofile')
         }
       },
-
+      showchatbot(){
+        this.chatbot_visible = true
+      },
 
       //todo
       handleLogin(){
@@ -195,6 +205,9 @@
 
 
       },
+      handleClose(){
+        this.chatbot_visible = false
+      }
 
     },
     mounted: function () {

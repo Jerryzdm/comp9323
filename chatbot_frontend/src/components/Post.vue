@@ -41,7 +41,7 @@
       <label>Title</label>
       <a-input size="large" placeholder="title" v-model="title"/>
       <label>Tag</label><br>
-      <a-select defaultValue="Movies" size="large" @change="handleaddTagChange">
+      <a-select defaultValue="food" size="large" @change="handleaddTagChange">
         <a-select-option value="food">food</a-select-option>
         <a-select-option value="living">living</a-select-option>
       </a-select><br>

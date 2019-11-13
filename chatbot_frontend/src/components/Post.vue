@@ -112,7 +112,7 @@
         selectedTags: [],
         title:'' ,
         content:'',
-        addtag:['Movies'],
+        addtag:['food'],
         review:'',
         all_review:[]
 

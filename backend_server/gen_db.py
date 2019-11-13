@@ -4,11 +4,13 @@ from sqlalchemy.ext.declarative import declarative_base
 from models import *
 from courseCSVImporter import *
 from newsCSVImporter import *
+from postImporter import *
 
 db.metadata.create_all(db.engine)
 DBSession = sessionmaker(bind=db.engine)
 session = DBSession()
 newsImporter()
 courseImporter()
+postImporter()
 session.commit()
 session.close()

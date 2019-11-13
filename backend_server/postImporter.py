@@ -1,5 +1,7 @@
 import csv
 from models import *
+from rediesConnecter import rd
+
 csvPath = 'post_reply.csv'
 def postImporter():
     with open(csvPath, newline='') as csvfile:
@@ -12,11 +14,14 @@ def postImporter():
             new_post.authorType = 1
             new_post.content = row[2]
             new_post.title = row[1]
-            new_post.tags = ",".join(str(row[-1]))
+            l = []
+            l.append(row[-1])
+            new_post.tags = ",".join(l)
             new_post.priority = 1
             db.session.add(new_post)
             db.session.commit()
-
+            rd.sadd(str(row[-1]), new_post.postId)
+            rd.smembers(str(row[-1]))
             db.session.refresh(new_post)
             comment = Comment()
             comment.authorName = "admin"

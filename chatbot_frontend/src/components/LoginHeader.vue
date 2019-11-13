@@ -30,7 +30,7 @@
       <label>Username</label>
       <a-input size="large" v-model="username"></a-input>
       <label>Password</label>
-      <a-input size="large" v-model="password"></a-input>
+      <a-input size="large" type="password" v-model="password"></a-input>
     </a-modal>
 
     <!--sign up pop-up windows-->
@@ -44,9 +44,9 @@
       <label>User_type</label>
       <a-input size="large" v-model="sign_user_type"></a-input>
       <label>Password</label>
-      <a-input size="large" v-model="sign_password"></a-input>
+      <a-input size="large" type="password" v-model="sign_password"></a-input>
       <label>Confirm Password</label>
-      <a-input size="large" v-model="sign_confirmpassword"></a-input>
+      <a-input size="large" type="password" v-model="sign_confirmpassword"></a-input>
 
     </a-modal>
   </div>

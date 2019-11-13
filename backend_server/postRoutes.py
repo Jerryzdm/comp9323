@@ -23,8 +23,7 @@ tagForm = api.model('post_form', tags_form)
 class GetPost(Resource):
     @api.doc(
         description="Import a collection from the data service\nthe <collection> is collections in url\nThe database contains a table called collections, which has five properties, the primary key type is int, the remaining properties are type text type, and the json of \"entries\" is stored as strings.")
-    @jwt_required
-    @api.param("Authorization", _in='header')
+
     def get(self,pid):
         print(pid)
         post = Post.query.filter_by(postId=pid).first()

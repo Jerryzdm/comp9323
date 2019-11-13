@@ -30,9 +30,9 @@ def send_request(request_order):
     return response_order
 
 
-term = 'Summer'  # 'Term1' or 'Term2' or 'Term3' or 'Summer'
-course_code = 'COMP9517'
-phase = 'Undergraduate' #'Undergraduate' or 'Postgraduate'
+term = 'Term3'  # 'Term1' or 'Term2' or 'Term3' or 'Summer'
+course_code = 'COMP9024'
+phase = 'Postgraduate' #'Undergraduate' or 'Postgraduate'
 email = 'ss@gmail.com'
 query_type_flag = 'bind'  # 'bind' or 'unbind'
 request_order = {'course_code':course_code, 'term':term,'phase':phase, 'email':email,

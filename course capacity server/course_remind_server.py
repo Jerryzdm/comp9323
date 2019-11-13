@@ -153,7 +153,7 @@ def input_course_code(course_code, term, driver):
         time.sleep(0.1)
 
         page_s = driver.page_source
-        print(page_s)
+        #print(page_s)
         if jugde_result_noll(page_s) == False:
             elem = driver.find_element_by_xpath('/html/body/div[2]/form/div[2]/button[1]')
             elem.click()

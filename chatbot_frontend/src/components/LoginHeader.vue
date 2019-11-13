@@ -33,11 +33,11 @@
       <label>Password</label>
       <a-input size="large" type="password" v-model="password"></a-input>
     </a-modal>
-    <a-modal  v-model="chatbot_visible" @ok="handleClose" okText="Close" >
+    <a-modal  v-model="chatbot_visible" @ok="handleClose" okText="Close" footer='' >
     <iframe
       allow="microphone;"
-      width="350"
-      height="430"
+      width="450px"
+      height="450px"
       src="https://console.dialogflow.com/api-client/demo/embedded/bc743cc1-7917-475d-bd5e-8260fcf5e126">
     </iframe>
     </a-modal>

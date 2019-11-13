@@ -27,6 +27,9 @@
 
     </a-layout>
   </div>
+
+
+
   </div>
 </template>
 
@@ -50,7 +53,8 @@
         Course:Course,
 
       }
-    }
+    },
+
   }
 </script>
 

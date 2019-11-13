@@ -82,16 +82,10 @@ def send_async_email(app, msg):
         mail.send(msg)
 
 
-def sendEmail(courseCode):
-    follow_list = Follow.query.filter(courseCode=courseCode)
-    for follow in follow_list:
-        email = follow.email
-        userName = follow.username
-        courseCode = follow.courseCode
-        courseName = follow.courseName
-        msg = Message('Registering', sender='2457937678@qq.com', recipients=[email])
-        msg.body = 'hello %s! The course %s %s is available for registering now.' % (userName, courseCode, courseName)
-        send_async_email(app, msg)
-
+def sendEmail(capacity, coursecode, email):
+    msg = Message('Registering', sender='2457937678@qq.com', recipients=[email])
+    msg.body = 'hello! The number of enrols for the course %s is %s now. It"s available for registering.' \
+               % (coursecode, capacity)
+    send_async_email(app, msg)
 
 api.add_resource(CourseList, '')

@@ -274,8 +274,8 @@ def space_ava_flag(seat_list):
             return True
     return False
 
-def send_email(email_list,course_code):
-    sendEmail(email_list,course_code)
+def send_email(capacity,course_code,email_list):
+    sendEmail(capacity,course_code,email_list)
     for i in email_list:
         print(f'send {i} done!')
 
@@ -286,14 +286,19 @@ def search_in_refresh_time(search_co_list,driver):
         request_order = search_co_list[k]['request_order']
         email_list = search_co_list[k]['email']
         course_code = k
+
         response_order, driver = deal_order_function(request_order, driver)
+
         if response_order['flag'] == True:
-            send_email(email_list,course_code)
+            capacity = response_order['all_result'][7]
+            send_email(capacity,course_code,email_list)
             success_find_list.append(search_co_list.pop(k))
     return search_co_list,driver,success_find_list
 
-
+start_time_s = time.time()
 while True:
+    if time.time() - start_time_s >1000:
+        break
     try:
         connectionSocket, addr = serverSocket.accept()
         request_pack = connectionSocket.recv(1024)

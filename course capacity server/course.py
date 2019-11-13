@@ -26,22 +26,21 @@ def send_request(request_order):
     response_order = decode_response(response_pack)
 
     print('From Server:', response_order)
-    print(response_order==[None])
     clientSocket.close()
     return response_order
 
 
-term = 'Term1'  # 'Term1' or 'Term2' or 'Term3'
-course_code = 'COMP9323'
-
-
-
-request_order = [course_code, term]
+term = 'Summer'  # 'Term1' or 'Term2' or 'Term3' or 'Summer'
+course_code = 'COMP9517'
+phase = 'Undergraduate' #'Undergraduate' or 'Postgraduate'
+email = 'ss@gmail.com'
+query_type_flag = 'bind'  # 'bind' or 'unbind'
+request_order = {'course_code':course_code, 'term':term,'phase':phase, 'email':email,
+                 'query_type_flag':query_type_flag}
 s = time.time()
 response_order = send_request(request_order)
 d = time.time()-s
 print(d)
-
 
 
 

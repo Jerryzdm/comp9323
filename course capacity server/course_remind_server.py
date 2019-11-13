@@ -3,7 +3,7 @@ import json
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
+from courseRoutes import sendEmail
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import time
@@ -35,9 +35,9 @@ def congure_set():
     chrome_options.add_argument('--headless')
 
     chrome_options.add_argument('--disable-gpu')
-    driver = webdriver.Chrome('/usr/local/bin/chromedriver',options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
 
-    # driver = webdriver.Chrome()
+    #driver = webdriver.Chrome()
     # driver.get('https://ssologin.unsw.edu.au/cas/login?service=https%3A%2F%2Fmy.unsw.edu.au%2Fportal%2FadfAuthentication')
     driver.get(
         'https://ssologin.unsw.edu.au/cas/login?service=https%3A%2F%2Fmy.unsw.edu.au%2Factive%2FstudentClassEnrol%2Fcourses.xml')
@@ -60,54 +60,108 @@ def login(z_id, z_password, driver):
     return driver
 
 def input_course_code(course_code, term, driver):
-    if term == 'Term1':
-        print(term)
+    if term == 'Summer':
+        elem = driver.find_element_by_xpath('//*[@id="term5202Link"]')
+        elem.click()
+        time.sleep(0.2)
+        elem = driver.find_element_by_xpath('//*[@id="formSearchBtn5202"]')
+        elem.click()
+        time.sleep(0.2)
+
+        elem = driver.find_element_by_xpath('//*[@id="freeText"]')
+        elem.send_keys(course_code)
+        elem = driver.find_element_by_xpath('/html/body/div[2]/form/div[2]/button[2]')
+        elem.click()
+
+        page_s = driver.page_source
+        if jugde_result_noll(page_s) == False:
+            elem = driver.find_element_by_xpath('/html/body/div[2]/form/div[2]/button[1]')
+            elem.click()
+            return driver, None
+
+        elem = driver.find_element_by_xpath('/html/body/div[2]/form/div/button[1]')
+        elem.click()
+
+        return driver, page_s
+
+    elif term == 'Term1':
+        #print(term)
         elem = driver.find_element_by_xpath('//*[@id="term5203Link"]')
         elem.click()
         time.sleep(0.2)
-        elem = driver.find_element_by_xpath('//*[@id="term5203"]/form/div[2]/div/div/input')
-        elem.send_keys(course_code)
-        time.sleep(0.1)
         elem = driver.find_element_by_xpath('//*[@id="formSearchBtn5203"]')
         elem.click()
+        time.sleep(0.2)
+
+        elem = driver.find_element_by_xpath('//*[@id="freeText"]')
+        elem.send_keys(course_code)
+        elem = driver.find_element_by_xpath('/html/body/div[2]/form/div[2]/button[2]')
+        elem.click()
+
         page_s = driver.page_source
         if jugde_result_noll(page_s) == False:
+            elem = driver.find_element_by_xpath('/html/body/div[2]/form/div[2]/button[1]')
+            elem.click()
             return driver,None
+
         elem = driver.find_element_by_xpath('/html/body/div[2]/form/div/button[1]')
         elem.click()
 
         return driver, page_s
 
     elif term == 'Term2':
-        print(term)
+        #print(term)
         elem = driver.find_element_by_xpath('//*[@id="term5206Link"]')
         elem.click()
-        time.sleep(0.3)
-        elem = driver.find_element_by_xpath('//*[@id="term5206"]/form/div[2]/div/div/input')
-        elem.send_keys(course_code)
+        time.sleep(0.2)
         elem = driver.find_element_by_xpath('//*[@id="formSearchBtn5206"]')
         elem.click()
+        time.sleep(0.2)
+
+        elem = driver.find_element_by_xpath('//*[@id="freeText"]')
+        elem.send_keys(course_code)
+        elem = driver.find_element_by_xpath('/html/body/div[2]/form/div[2]/button[2]')
+        elem.click()
+
         page_s = driver.page_source
         if jugde_result_noll(page_s) == False:
+            elem = driver.find_element_by_xpath('/html/body/div[2]/form/div[2]/button[1]')
+            elem.click()
             return driver,None
+
         elem = driver.find_element_by_xpath('/html/body/div[2]/form/div/button[1]')
         elem.click()
+
         return driver, page_s
 
+
     elif term == 'Term3':
-        print(term)
+
+        #print(term)
         elem = driver.find_element_by_xpath('//*[@id="term5209Link"]')
         elem.click()
-        time.sleep(0.4)
-        elem = driver.find_element_by_xpath('//*[@id="term5209"]/form/div[2]/div/div/input')
-        elem.send_keys(course_code)
+        time.sleep(0.2)
         elem = driver.find_element_by_xpath('//*[@id="formSearchBtn5209"]')
         elem.click()
+        time.sleep(0.5)
+
+        elem = driver.find_element_by_xpath('//*[@id="freeText"]')
+        elem.send_keys(course_code)
+        elem = driver.find_element_by_xpath('/html/body/div[2]/form/div[2]/button[2]')
+        elem.click()
+
+        time.sleep(0.1)
+
         page_s = driver.page_source
+        print(page_s)
         if jugde_result_noll(page_s) == False:
+            elem = driver.find_element_by_xpath('/html/body/div[2]/form/div[2]/button[1]')
+            elem.click()
             return driver,None
+
         elem = driver.find_element_by_xpath('/html/body/div[2]/form/div/button[1]')
         elem.click()
+
         return driver, page_s
     else:
         return driver, None
@@ -144,31 +198,44 @@ def init_page(z_id, z_password):
 def get_capacity(course_code, term,driver):
     driver, page_s = input_course_code(course_code, term, driver)
     if page_s == None:
-        return [None],driver
-    '''
-    time.sleep(0.1)
-    elem = driver.find_element_by_xpath('//*[@id="pt1:pt_gl3j_id_1"]')
-    elem.click()
-    time.sleep(0.1)
-    elem = driver.find_element_by_xpath('//*[@id="pt1:r49ab54:0:i5::icon"]')
-    elem.click()
-    time.sleep(0.1)
-    '''
+        return [],driver
 
+    #print(page_s)
     all_result = get_result(page_s)
     return all_result,driver
 
-
-
-
 def deal_order_function(request_order,driver):
 
-    course_code= request_order[0]
-    term = request_order[1]
+    course_code= request_order['course_code']
+    term = request_order['term']
 
     # driver.refresh()
     all_result,driver = get_capacity(course_code, term,driver)
-    return all_result,driver
+
+
+    result_return = {'Undergraduate':[],'Postgraduate':[]}
+    #print(all_result)
+
+    for i in all_result:
+        if 'Undergraduate' in i:
+            result_return['Undergraduate'].append(i)
+        if 'Postgraduate' in i:
+            result_return['Postgraduate'].append(i)
+
+
+    seat_list = result_return[request_order['phase']]
+    #print('seat_list',seat_list)
+    if seat_list == []:
+        flag = True
+    else:
+        flag = space_ava_flag(seat_list)
+    result = {'flag':flag,'all_result':seat_list,'message':None}
+
+    return result,driver
+
+
+
+
 
 print('server is initing!')
 z_id, z_password = 'z5142915', 'Fromglentoglen456'
@@ -177,7 +244,56 @@ print('server init completed!')
 print("The server is ready to receive")
 #listening
 start_time = time.time()
-while 1:
+
+search_co_list = {}
+
+def add_in_list(search_co_list,request_order):
+    course_code = request_order['course_code']
+    email = request_order['email']
+    if course_code not in search_co_list:
+        search_co_list[course_code] = {'email': [email], 'request_order': request_order,
+                                       'created_time': time.time()}
+    elif email not in search_co_list[course_code]['email']:
+        search_co_list[course_code]['email'].append(email)
+    return search_co_list
+
+
+def remove_out_list(search_co_list):
+    time_out_list = []
+    k_list = list(search_co_list.keys())
+    for k in k_list:
+        if time.time() - search_co_list[k]['created_time']>=200:
+            time_out_list.append(search_co_list.pop(k))
+    return search_co_list,time_out_list
+
+def space_ava_flag(seat_list):
+    for seat in seat_list:
+        ava = int(seat[-2].split('/')[0].strip())
+        total = int(seat[-2].split('/')[1].strip())
+        if ava<total:
+            return True
+    return False
+
+def send_email(email_list,course_code):
+    sendEmail(email_list,course_code)
+    for i in email_list:
+        print(f'send {i} done!')
+
+def search_in_refresh_time(search_co_list,driver):
+    success_find_list = []
+    search_wait_list = list(search_co_list.keys())
+    for k in search_wait_list:
+        request_order = search_co_list[k]['request_order']
+        email_list = search_co_list[k]['email']
+        course_code = k
+        response_order, driver = deal_order_function(request_order, driver)
+        if response_order['flag'] == True:
+            send_email(email_list,course_code)
+            success_find_list.append(search_co_list.pop(k))
+    return search_co_list,driver,success_find_list
+
+
+while True:
     try:
         connectionSocket, addr = serverSocket.accept()
         request_pack = connectionSocket.recv(1024)
@@ -185,15 +301,37 @@ while 1:
         request_order = decode_response(request_pack)
         print(request_order)
 
+
         response_order,driver = deal_order_function(request_order,driver)
         print('return a response')
-        print(response_order)
 
+        if request_order['query_type_flag'] == 'bind' and response_order['flag'] == False:
+            search_co_list = add_in_list(search_co_list, request_order)
+            response_order['message'] = 'course binded'
+            print('this order is binded')
+        elif request_order['query_type_flag'] == 'bind' and response_order['flag'] == True:
+            response_order['message'] = 'space available or no that course'
+            print('this order is unbinded')
+        print(response_order)
         response_pack = encode_request(response_order)
         print()
         connectionSocket.send(response_pack)
         connectionSocket.close()
+
+        search_co_list,time_out_list = remove_out_list(search_co_list)
+        print('because courses are time out, remove out them from wait list:')
+        print(time_out_list)
+        search_co_list, driver,success_find_list = search_in_refresh_time(search_co_list, driver)
+        print('because courses are found, remove out them from wait list:')
+        print(success_find_list)
+
     except socket.timeout:
         driver.refresh()
         print('page refreshed')
+        search_co_list,time_out_list = remove_out_list(search_co_list)
+        print('because courses are time out, remove out them from wait list:')
+        print(time_out_list)
+        search_co_list, driver,success_find_list = search_in_refresh_time(search_co_list, driver)
+        print('because courses are found, remove out them from wait list:')
+        print(success_find_list)
         print(f'server has been ran {time.time() - start_time}')

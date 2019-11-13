@@ -12,7 +12,7 @@ def postImporter():
             new_post.authorType = 1
             new_post.content = row[2]
             new_post.title = row[1]
-            new_post.tags = ",".join("".join(row[-1]))
+            new_post.tags = ",".join(str(row[-1]))
             new_post.priority = 1
             db.session.add(new_post)
             db.session.commit()

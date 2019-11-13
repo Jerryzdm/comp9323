@@ -6,7 +6,6 @@ def courseImporter():
         spamreader = csv.reader(csvfile, delimiter=',')
         next(spamreader)
         for row in spamreader:
-            print(row)
             new_course = Course()
             new_course.courseCode = row[1]
             new_course.courseName = row[2]

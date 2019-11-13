@@ -5,8 +5,8 @@
       <h2 style="padding: 6px 12px 0 12px;color: #484848">News</h2>
     </div>
 
-    <a-list itemLayout="horizontal" :dataSource="newsdata" :pagination="pagination" style="text-align: left">
-      <a-list-item slot="renderItem" slot-scope="item, index">
+    <a-list itemLayout="horizontal" :dataSource="newsdata" :pagination="pagination" style="text-align: left;padding: 0 10px">
+      <a-list-item slot="renderItem" slot-scope="item, index" >
         <p slot="actions">{{item.newsDate}}</p>
         <a-list-item-meta
           :description="item.newsStandfirst"
@@ -15,12 +15,14 @@
         </a-list-item-meta>
       </a-list-item>
     </a-list>
+
+
+
   </div>
 
 </template>
 
 <script>
-
   export default {
     data() {
       return {
@@ -28,8 +30,8 @@
         pagination: {
           pageSize: 5,
           showTotal: total => total > 1 ? 'Total ' + total + ' news' : 'Total ' + total + ' news'
-
         },
+
       }
     },
     mounted() {

@@ -13,3 +13,9 @@ class Config():
     JWT_EXPIRATION_DELTA = datetime.timedelta(minutes=15)
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
+
+    MAIL_SERVER = 'smtp.qq.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = '2457937678@qq.com'
+    MAIL_PASSWORD = 'ieuhxafpzqhadjfj'

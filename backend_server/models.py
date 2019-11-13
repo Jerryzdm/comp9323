@@ -57,7 +57,13 @@ class Course(db.Model):
     courseName = Column(String(128))
     courseUrl = Column(Text)
     courseUOC = Column(Integer)
-    repeateCourse = Column(Text)
+    courseOverview = Column(Text)
+    courseFaculty = Column(Text)
+    courseSchool = Column(Text)
+    courseStudyLevel = Column(Text)
+    courseTerms = Column(Text)
+    courseCampus = Column(Text)
+    #repeateCourse = Column(Text)
 
 class News(db.Model):
     __tablename__ = 'news'
@@ -66,5 +72,14 @@ class News(db.Model):
     newsDate = Column(String(20))
     newsUrl = Column(Text)
     newsStandfirst = Column(Text)
+
+class Follow(db.Model):
+    followId = Column(Integer, primary_key=True, autoincrement=True)
+    userId = Column(Integer)
+    email = Column(db.String(512))
+    username = Column(String(20), unique=True)
+    courseCode = Column(String(20),unique=True)
+    courseName = Column(String(128))
+    status = Column(Integer, default=1)
 
 

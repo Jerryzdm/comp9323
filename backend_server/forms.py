@@ -23,3 +23,8 @@ commsnts_form = {
         'content':fields.String(required=True),
         'reply_to':fields.Integer(required=True)
 }
+
+follow_form = {
+        'course_code':fields.Integer(required=True),
+        'course_name':fields.String(required=True)
+}

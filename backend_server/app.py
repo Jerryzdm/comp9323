@@ -5,6 +5,8 @@ from config import Config
 from flask_restplus import Api,Resource,fields,Namespace
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+from flask_script import Manager, Shell
+from flask_mail import Mail, Message
 
 import redis
 
@@ -21,6 +23,8 @@ app.config.from_object(Config)
 api.init_app(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+mail = Mail(app)
+
 jwt = JWTManager(app)
 CORS(app)
 revoked_store = redis.StrictRedis(host='localhost', port=6379, db=0,
@@ -46,6 +50,5 @@ if __name__ == '__main__':
     api.add_namespace(ns3)
     api.add_namespace(ns4)
     api.add_namespace(ns5)
-
 
     app.run()

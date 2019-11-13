@@ -5,9 +5,9 @@
       <h2 style="padding: 6px 12px 0 12px;color: #484848;width: 90%;float: left">Post</h2>
       <a-icon type="plus-circle" style="width: 10%;font-size: 40px" @click="addPost"/>
     </div>
+    <div style="clear: both;"></div>
 
-    <div style="text-align: left">
-      <strong :style="{ marginRight: 8 }">Categories:</strong>
+    <div style="margin: 20px">
       <template v-for=" tag in tags">
         <a-checkable-tag
           :key="tag"
@@ -28,11 +28,9 @@
       >
         <a-list-item slot="renderItem" slot-scope="item, index"  style="text-align: left;padding: 0 10px">
           <p>{{item.date|dateformat('YYYY-MM-DD HH:mm')}}</p>
-          <p slot='actions' @click="post_detail(index)">Details</p>
-          <a-list-item-meta
-            :description="item.content"
-          >
-            <a slot="title" style="font-size: 16px;font-weight: bold">{{item.title}}</a>
+          <p slot='actions' @click="post_detail(item.postId)">Details</p>
+          <a-list-item-meta style="width: 500px">
+            <p slot="title" style="font-size: 16px;font-weight: bold;width: 500px">{{item.title}}</p>
           </a-list-item-meta>
 
         </a-list-item>
@@ -44,16 +42,14 @@
       <a-input size="large" placeholder="title" v-model="title"/>
       <label>Tag</label><br>
       <a-select defaultValue="Movies" size="large" @change="handleaddTagChange">
-        <a-select-option value="Movies">Movies</a-select-option>
-        <a-select-option value="Music">Music</a-select-option>
-        <a-select-option value="Books">Books</a-select-option>
-        <a-select-option value="Sports">Sports</a-select-option>
+        <a-select-option value="food">food</a-select-option>
+        <a-select-option value="living">living</a-select-option>
       </a-select><br>
       <label>Content</label>
       <a-textarea placeholder="content" :rows="4" v-model="content"/>
     </a-modal>
 
-    <a-modal :title="dataildata.title" v-model="post_visible" @ok="handleOk" okText="Close" >
+    <!--<a-modal :title="dataildata.title" v-model="post_visible" @ok="handleOk" okText="Close" >
       <label>{{dataildata.title}}</label><br>
       <label>{{dataildata.content}}</label><br>
       <a-divider>Reply</a-divider>
@@ -87,7 +83,7 @@
           </a-form-item>
         </div>
       </a-comment>
-    </a-modal>
+    </a-modal>-->
   </div>
 </template>
 
@@ -112,7 +108,7 @@
         checked1: false,
         checked2: false,
         checked3: false,
-        tags: ['Movies', 'Books', 'Music', 'Sports'],
+        tags: ['food', 'living'],
         selectedTags: [],
         title:'' ,
         content:'',
@@ -123,15 +119,15 @@
       }
     },
     methods:{
-      post_detail(index){
-        this.dataildata = this.postdata[index]
-        this.axios.get("/comments/"+this.dataildata.postId).then((res)=>{
+      post_detail(id){
+        //this.dataildata = this.postdata[index]
+        /*this.axios.get("/comments/"+this.dataildata.postId).then((res)=>{
           if(res.status === 200){
             this.all_review = res.data
           }
           console.log(this.all_review)
-        })
-        this.post_visible = true
+        })*/
+        this.$router.push({name: 'DetailPage', params: {post_id: id}})
       },
 
 
@@ -202,40 +198,14 @@
 
 
       },
-      //todo
-      handleSubmit(postId){
-        console.log(this.review)
-        console.log(postId)
-        this.axios.post("/comments",{
-          "content":this.review,
-          "reply_to":postId
-        },
-          {
-            headers:{
-              'Authorization':Cookies.get('access_token')
-            }
-          }).then((res)=>{
-            if(res.status === 201){
-              this.$message.success('Post successfully!');
-              console.log("评论成功")
-              this.review = ''
-              this.post_visible = false
-            }else {
-              this.$message.error('Post failure!');
-              this.post_visible = false
-            }
-        }).catch((e)=>{
-          this.$message.error('Post failure!You should login first.');
-          this.post_visible = false
-        })
 
-      },
     },
     mounted() {
       this.axios.get("/posts/all").then((res)=>{
         if(res.status === 201){
           this.postdata = res.data
           this.postdata_tmp = res.data
+          console.log(res)
         }
       })
     }

@@ -7,7 +7,7 @@
 
   <div style="margin-top: 20px">
     <a-layout>
-      <a-layout-content style="padding: 50px 200px">
+      <a-layout-content style="padding: 50px 100px">
         <a-layout style="padding: 24px 0; background: #fff">
           <a-layout-sider width="200" style="background: #fff">
             <a-menu

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Mainpage from '@/components/Mainpage'
 import AdminLogin from '@/components/AdminLogin'
 import MyProfile from '@/components/MyProfile'
+import DetailPage from '@/components/DetailPage'
 Vue.use(Router)
 
 export default new Router({
@@ -26,5 +27,10 @@ export default new Router({
         isLogin:true//do not need login
       }
     },
+    {
+      path:'/detailpage/:post_id',
+      name:'DetailPage',
+      component:DetailPage
+    }
   ]
 })

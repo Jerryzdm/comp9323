@@ -19,7 +19,7 @@ Vue.prototype.axios = axios
 
 
 Vue.filter('dateformat', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
-  return moment(dataStr).format(pattern)
+  return moment(dataStr*1000).format(pattern)
 })
 
 router.beforeEach((to, from, next) => {

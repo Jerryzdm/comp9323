@@ -6,26 +6,33 @@
     </div>
     <div style="padding: 10px 20px;text-align: center">
 
-      <a-input placeholder="search course" v-model="search_course" style="float: left;width: 60%;margin-left: 15%"></a-input>
+      <a-input placeholder="search course" v-model="search_course"
+               style="float: left;width: 60%;margin-left: 15%"></a-input>
       <a-button style="float: left;margin-left: 5px">Search</a-button>
       <div style="clear: both"></div>
     </div>
-    <a-list :grid="{ gutter: 16, column: 3 }" :dataSource="coursedata" :pagination="course_pagination" style="margin-top: 10px;margin-right: 20px;margin-left: 20px">
+    <a-list :grid="{ gutter: 16, column: 2 }" :dataSource="coursedata" :pagination="course_pagination"
+            style="margin-top: 10px;margin-right: 20px;margin-left: 20px">
       <a-list-item slot="renderItem" slot-scope="item, index">
-        <a-card :title="item.courseCode"  style="border-radius: 15px;">
+        <a-card :title="item.courseCode" style="border-radius: 15px;">
 
-         <!-- <p>{{item.courseCode}}</p>-->
+          <!-- <p>{{item.courseCode}}</p>-->
+          <div>
+          <a-icon type="environment" /><p>{{item.courseCampus}}</p>
+          </div>
+          <p>{{item.courseFaculty}}</p>
+          <p>{{item.courseTerms}}</p>
           <p style="height: 70px">{{item.courseName}}</p>
           <p>{{item.courseUOC}} UOC</p>
           <a slot="actions" :href="item.courseUrl" style="border-radius: 15px;">Details</a>
           <a slot="actions" @click="show_reviews(item.title)" style="border-radius: 15px;">Review</a>
-          <a-switch slot="actions" checkedChildren="on" unCheckedChildren="off" :defaultChecked="false" />
+          <a-switch slot="actions" checkedChildren="on" unCheckedChildren="off" :defaultChecked="false"/>
         </a-card>
       </a-list-item>
     </a-list>
 
     <!--  reviews pop up window-->
-    <a-modal title="Reviews" v-model="course_visible" @ok="handleOk" okText="Close" >
+    <a-modal title="Reviews" v-model="course_visible" @ok="handleOk" okText="Close">
 
       <a-list
         itemLayout="horizontal"
@@ -50,7 +57,7 @@
             <a-textarea :rows="4" @change="handleChange" :value="value"></a-textarea>
           </a-form-item>
           <a-form-item>
-            <a-button  @click="handleSubmit" type="primary">
+            <a-button @click="handleSubmit" type="primary">
               Add Review
             </a-button>
           </a-form-item>
@@ -62,9 +69,9 @@
 
 <script>
   export default {
-    data(){
-      return{
-        coursedata:[],
+    data() {
+      return {
+        coursedata: [],
         pagination: {
           pageSize: 5,
           showTotal: total => total > 1 ? 'Total ' + total + ' reviews' : 'Total ' + total + ' review'
@@ -73,27 +80,27 @@
           pageSize: 6,
           showTotal: total => total > 1 ? 'Total ' + total + ' courses' : 'Total ' + total + ' course'
         },
-        course_visible:false,
-        value:'',
+        course_visible: false,
+        value: '',
       }
     },
-    methods:{
-      show_reviews(title){
+    methods: {
+      show_reviews(title) {
         console.log(title)
         this.course_visible = true
       },
-      handleOk(){
+      handleOk() {
         this.course_visible = false
       },
-      handleChange(){
+      handleChange() {
 
       },
-      handleSubmit(){
+      handleSubmit() {
 
       }
     },
     mounted() {
-      this.axios.get("/course").then((res)=>{
+      this.axios.get("/course").then((res) => {
         this.coursedata = res.data
         console.log(res.data)
       })

@@ -92,6 +92,7 @@ def jsontifyPostById(pid):
         return None
 def jsontifyPost(post):
     if post:
+        print(post.date.timestamp())
         return {"postId": post.postId,
                 "authorId": post.authorId,
                 "content": post.content,
@@ -173,6 +174,7 @@ class CreatePost(Resource):
             new_post.title = r['title']
             new_post.tags = ",".join(r['tags'])
             new_post.priority = 1
+            new_post.date = datetime.now()
             db.session.add(new_post)
             db.session.commit()
             db.session.refresh(new_post,['postId'])

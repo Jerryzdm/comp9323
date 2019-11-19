@@ -14,6 +14,7 @@ def postImporter():
             new_post.authorType = 1
             new_post.content = row[2]
             new_post.title = row[1]
+            new_post.date = datetime.now()
             l = []
             l.append(row[-1])
             new_post.tags = ",".join(l)
@@ -29,6 +30,5 @@ def postImporter():
             comment.content = row[3]
             comment.reply_to =new_post.postId
             db.session.add(comment)
-
             db.session.commit()
 

@@ -39,6 +39,25 @@ def exportCourse(course):
 # reg_forms = api.model('reg_form', reg_form)
 follow_forms = api.model('follow_form', follow_form)
 
+@api.route('/<string:coursename>')
+class CourseListByName(Resource):
+    def get(self,coursename):
+        result = []
+
+        try:
+            lists = Course.query.filter(Course.courseCode == coursename).order_by(desc(Course.courseCode)).all()
+            for course in lists:
+                result.append(exportCourse(course))
+            lists = Course.query.filter(Course.courseName.ilike("%" + coursename + "%")).order_by(desc(Course.courseCode)).all()
+            for course in lists:
+                result.append(exportCourse(course))
+        except:
+            return {"message": "bad payload"}, 400
+        return result,200
+
+
+
+
 class CourseList(Resource):
     def get(self):
         result = []

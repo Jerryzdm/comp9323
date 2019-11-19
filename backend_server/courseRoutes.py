@@ -54,6 +54,53 @@ class CourseListByName(Resource):
         except:
             return {"message": "bad payload"}, 400
         return result,200
+@api.route('/subscribe')
+class CourseSubscribeList(Resource):
+    @jwt_required
+    @api.param("Authorization", _in='header')
+    @api.doc(description="Get current user's subscribe list")
+    def get(self):
+        try:
+            current_user = get_jwt_identity()
+        except:
+            return {"message": "token"}, 400
+        author = User.query.filter_by(username=current_user).first()
+        result = []
+        try:
+            lists = Subscribe.query.filter(Subscribe.uid == author.id).all()
+            for e in lists:
+                result.append(e.cid)
+            return result,200
+        except:
+            return {"message": "bad payload"}, 400
+
+@api.route('/subscribe/<int:cid>')
+class CourseSubscribe(Resource):
+    @jwt_required
+    @api.param("Authorization", _in='header')
+    @api.doc(description="to subscribe a crouse by courseId")
+
+    def get(self,cid):
+        try:
+            current_user = get_jwt_identity()
+        except:
+            return {"message": "token"}, 400
+        author = User.query.filter_by(username=current_user).first()
+
+        try:
+            lists = Subscribe.query.filter(Subscribe.cid == cid and Subscribe.uid == author.id).all()
+            if(len(lists)==0):
+                new_subscribe = Subscribe()
+                new_subscribe.uid = author.id
+                new_subscribe.cid = cid
+                db.session.add(new_subscribe)
+                db.session.commit()
+                return {"message": "subscribed"}, 201
+            else:
+                return {"message": "already subscribed"}, 400
+
+        except:
+            return {"message": "bad payload"}, 400
 
 
 

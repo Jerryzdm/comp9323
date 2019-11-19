@@ -82,4 +82,9 @@ class Follow(db.Model):
     courseName = Column(String(128))
     status = Column(Integer, default=1)
 
+class Subscribe(db.Model):
+    uid = Column(Integer, ForeignKey(User.id),primary_key=True)
+    cid = Column(Integer, ForeignKey(Course.courseId),primary_key=True)
+
+
 

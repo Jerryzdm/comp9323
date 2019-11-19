@@ -8,7 +8,7 @@
 
       <a-input placeholder="search course" v-model="search_course"
                style="float: left;width: 60%;margin-left: 15%"></a-input>
-      <a-button style="float: left;margin-left: 5px">Search</a-button>
+      <a-button style="float: left;margin-left: 5px" @click="searchCourse">Search</a-button>
       <div style="clear: both"></div>
     </div>
     <a-list :grid="{ gutter: 16, column: 2 }" :dataSource="coursedata" :pagination="course_pagination"
@@ -40,7 +40,7 @@
   </div>
           <a slot="actions" :href="item.courseUrl" style="border-radius: 15px;">Details</a>
           <a slot="actions" @click="show_reviews(item.title)" style="border-radius: 15px;">Review</a>
-          <a-switch slot="actions" checkedChildren="on" unCheckedChildren="off" :defaultChecked="false"/>
+          <a-switch slot="actions" checkedChildren="on" unCheckedChildren="off" :defaultChecked="item.flag" @change="onChange(item.courseId)"/>{{item.flag}}
         </a-card>
       </a-list-item>
     </a-list>
@@ -82,6 +82,7 @@
 </template>
 
 <script>
+  import Cookies from 'js-cookie'
   export default {
     data() {
       return {
@@ -96,6 +97,8 @@
         },
         course_visible: false,
         value: '',
+        search_course:'',
+        subscribedList:[]
       }
     },
     methods: {
@@ -111,13 +114,72 @@
       },
       handleSubmit() {
 
+      },
+      onChange(courseId){
+        if(Cookies.get('access_token')){
+          this.axios.get('/course/subscribe/'+courseId,{
+            headers:{
+              'Authorization':Cookies.get('access_token')
+            }
+          }).then((res)=>{
+              console.log(res)
+              this.$message.success('Subscribe successfully!');
+          })
+        }else {
+          this.$message.warning('You haven\'t logged in yet!Please log in!');
+        }
+
+      },
+      searchCourse(){
+        if(this.search_course !== ''){
+          this.axios.get('/course/'+this.search_course).then((res)=>{
+            this.coursedata = res.data
+            this.subscribedCheck(this.coursedata)
+          })
+        }else{
+          this.allCourse()
+        }
+
+      },
+      allCourse(){
+        this.axios.get("/course").then((res) => {
+          this.coursedata = res.data
+          this.subscribedCheck(this.coursedata)
+          console.log(res.data)
+        })
+      },
+      subscribedCheck(courseData){
+        courseData.forEach((item)=>{
+
+          if(Cookies.get('access_token')){
+              if(this.subscribedList.indexOf(item.courseId) != -1){
+                console.log(item.courseId)
+                console.log(item)
+                item['flag'] = true
+              }else{
+                item['flag'] = false
+              }
+          }else{
+            item['flag'] = false
+          }
+
+        })
       }
     },
     mounted() {
-      this.axios.get("/course").then((res) => {
-        this.coursedata = res.data
-        console.log(res.data)
-      })
+      if(Cookies.get('access_token')){
+        this.axios.get('/course/subscribe',{
+          headers:{
+            'Authorization':Cookies.get('access_token')
+          }
+        }).then((res)=>{
+          this.subscribedList = res.data
+          this.allCourse()
+        })
+      }else {
+        this.allCourse()
+      }
+
     }
   }
 </script>

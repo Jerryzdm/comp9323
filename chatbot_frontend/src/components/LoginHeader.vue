@@ -144,6 +144,7 @@
             Cookies.set("access_token",'Bearer '+response.data.access_token)
             Cookies.set("username",this.username)
             Cookies.set("uid",response.data.uid)
+            console.log(Cookies.get("access_token"))
             console.log('登陆成功')
             this.user_show = true
             this.show_username = this.username

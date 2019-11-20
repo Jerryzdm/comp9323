@@ -26,7 +26,7 @@
         :pagination="pagination"
         :dataSource="postdata"
       >
-        <a-list-item slot="renderItem" slot-scope="item, index"  style="text-align: left;padding: 0 10px">
+        <a-list-item slot="renderItem" slot-scope="item, index" style="text-align: left;padding: 0 10px">
           <p>{{item.date|dateformat('YYYY-MM-DD HH:mm')}}</p>
           <p slot='actions' @click="post_detail(item.postId)">Details</p>
           <a-list-item-meta style="width: 500px">
@@ -37,14 +37,16 @@
       </a-list>
     </div>
 
-    <a-modal title="Reviews" v-model="add_visible" @ok="handleaddOk" okText="Post" >
+    <a-modal title="Reviews" v-model="add_visible" @ok="handleaddOk" okText="Post">
       <label>Title</label>
       <a-input size="large" placeholder="title" v-model="title"/>
       <label>Tag</label><br>
       <a-select defaultValue="food" size="large" @change="handleaddTagChange">
         <a-select-option value="food">food</a-select-option>
         <a-select-option value="living">living</a-select-option>
-      </a-select><br>
+        <a-select-option value="event">event</a-select-option>
+      </a-select>
+      <br>
       <label>Content</label>
       <a-textarea placeholder="content" :rows="4" v-model="content"/>
     </a-modal>
@@ -89,37 +91,39 @@
 
 <script>
   import Cookies from 'js-cookie'
+
   const postdata = []
   const dataildata = {}
 
   export default {
-    data(){
-      return{
+    data() {
+      return {
         postdata,
-        postdata_tmp:[],
+        postdata_tmp: [],
         dataildata,
         pagination: {
-          pageSize: 5,
+          pageSize: 10,
           showTotal: total => total > 1 ? 'Total ' + total + ' posts' : 'Total ' + total + ' post'
         },
-        post_visible:false,
-        add_visible:false,
+        post_visible: false,
+        add_visible: false,
         value: '',
         checked1: false,
         checked2: false,
         checked3: false,
-        tags: ['food', 'living'],
+        tags: ['food', 'living','event'],
         selectedTags: [],
-        title:'' ,
-        content:'',
-        addtag:['food'],
-        review:'',
-        all_review:[]
+        title: '',
+        content: '',
+        addtag: ['food'],
+        review: '',
+        all_review: []
 
       }
     },
-    methods:{
-      post_detail(id){
+    methods: {
+      /*go to post detail page*/
+      post_detail(id) {
         //this.dataildata = this.postdata[index]
         /*this.axios.get("/comments/"+this.dataildata.postId).then((res)=>{
           if(res.status === 200){
@@ -131,26 +135,26 @@
       },
 
 
-      handleOk(){
+      handleOk() {
         this.post_visible = false
       },
-      handleChange(){
+      handleChange() {
       },
-
+      /*change selected tag*/
       handleTagChange(tag, checked) {
-        const { selectedTags } = this;
+        const {selectedTags} = this;
         const nextSelectedTags = checked
           ? [...selectedTags, tag]
           : selectedTags.filter(t => t !== tag);
         //console.log('You are interested in: ', nextSelectedTags);
         this.selectedTags = nextSelectedTags;
-        if(this.selectedTags.length === 0){
+        if (this.selectedTags.length === 0) {
           this.postdata = this.postdata_tmp
-        }else{
-          this.axios.post("/posts/tags",{
-            "tags":this.selectedTags
-          }).then((res)=>{
-            if(res.status === 201){
+        } else {
+          this.axios.post("/posts/tags", {
+            "tags": this.selectedTags
+          }).then((res) => {
+            if (res.status === 201) {
               this.postdata = res.data
               console.log(this.postdata)
               console.log(this.postdata_tmp)
@@ -163,31 +167,31 @@
         this.addtag = [value]
         console.log(`selected ${value}`);
       },
-
-      addPost(){
-        if(Cookies.get('access_token')){
+      /*show the add post window*/
+      addPost() {
+        if (Cookies.get('access_token')) {
           this.add_visible = true
-        }else {
+        } else {
           this.$message.warning('You haven\'t logged in yet!Please log in!');
         }
       },
       //todo
-      handleaddOk(){
-        this.axios.post('/posts',{
-          "title":this.title,
-          "tags":this.addtag,
-          "content":this.content
-        },{
-          headers:{
-            'Authorization':Cookies.get('access_token')
+      /*add new post */
+      handleaddOk() {
+        this.axios.post('/posts', {
+          "title": this.title,
+          "tags": this.addtag,
+          "content": this.content
+        }, {
+          headers: {
+            'Authorization': Cookies.get('access_token')
           }
-        }).then((res)=>{
-          if(res.status === 201){
-            console.log("创建成功")
-            this.axios.get("/posts/all").then((res)=>{
+        }).then((res) => {
+          if (res.status === 201) {
+            this.axios.get("/posts/all").then((res) => {
               console.log(res.status)
               console.log(res.data)
-              if(res.status === 201){
+              if (res.status === 201) {
                 this.postdata = res.data
                 this.postdata_tmp = res.data
                 this.add_visible = false
@@ -195,14 +199,13 @@
             })
           }
         })
-
-
       },
 
     },
     mounted() {
-      this.axios.get("/posts/all").then((res)=>{
-        if(res.status === 201){
+      /*get all the post*/
+      this.axios.get("/posts/all").then((res) => {
+        if (res.status === 201) {
           this.postdata = res.data
           this.postdata_tmp = res.data
           console.log(res)

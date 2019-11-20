@@ -9,6 +9,7 @@ import Cookies from 'js-cookie'
 
 import 'ant-design-vue/dist/antd.css'
 import moment from 'moment'
+
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = "http://127.0.0.1:5000"
@@ -18,8 +19,8 @@ Vue.use(Cookies)
 Vue.prototype.axios = axios
 
 
-Vue.filter('dateformat', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
-  return moment(dataStr*1000).format(pattern)
+Vue.filter('dateformat', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+  return moment(dataStr * 1000).format(pattern)
 })
 
 router.beforeEach((to, from, next) => {
@@ -42,7 +43,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {App},
   template: '<App/>'
 })
 

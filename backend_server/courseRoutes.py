@@ -74,12 +74,14 @@ class CourseSubscribeList(Resource):
         except:
             return {"message": "bad payload"}, 400
 
+
+
+
 @api.route('/subscribe/<int:cid>')
 class CourseSubscribe(Resource):
     @jwt_required
     @api.param("Authorization", _in='header')
     @api.doc(description="to subscribe a crouse by courseId")
-
     def get(self,cid):
         try:
             current_user = get_jwt_identity()

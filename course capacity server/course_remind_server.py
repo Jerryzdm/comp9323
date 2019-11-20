@@ -153,7 +153,7 @@ def input_course_code(course_code, term, driver):
         time.sleep(0.1)
 
         page_s = driver.page_source
-        print(page_s)
+        #print(page_s)
         if jugde_result_noll(page_s) == False:
             elem = driver.find_element_by_xpath('/html/body/div[2]/form/div[2]/button[1]')
             elem.click()
@@ -251,6 +251,7 @@ def add_in_list(search_co_list,request_order):
     course_code = request_order['course_code']
     email = request_order['email']
     if course_code not in search_co_list:
+        sendEmail('Full',course_code, email,'comfirm_mess')
         search_co_list[course_code] = {'email': [email], 'request_order': request_order,
                                        'created_time': time.time()}
     elif email not in search_co_list[course_code]['email']:
@@ -275,7 +276,7 @@ def space_ava_flag(seat_list):
     return False
 
 def send_email(capacity,course_code,email_list):
-    sendEmail(capacity,course_code,email_list)
+    sendEmail(capacity,course_code,email_list,'available_mess')
     for i in email_list:
         print(f'send {i} done!')
 

@@ -43,8 +43,7 @@
       <template>
       <div class="talk_con">
         <div class="talk_show" id="words">
-          <div class="atalk"><span id="asay">A说：吃饭了吗？</span></div>
-          <div class="btalk"><span id="bsay">B说：还没呢，你呢？</span></div>
+          <div class="atalk"><span id="asay">Hello</span></div>
         </div>
         <div class="talk_input">
           <!--<select class="whotalk" id="who">
@@ -91,19 +90,33 @@
           var message = TalkWords.value
           if(message == ""){
             // 消息为空时弹窗
-            alert("消息不能为空");
+            alert("Message can not be empty");
             return;
           }
 
             //如果Who.value为0n那么是 A说
            /* str = '<div class="atalk"><span id="asay">A说 :' + message +'</span></div>';*/
 
-          str = "<div class='btalk'><span id='bsay'>B说 :" + message +"</span></div>" ;
+          str = "<div class='btalk' style='margin:10px 10px 10px 50px;\n" +
+            "    text-align:right;'><span id='bsay' style='display:inline-block;\n" +
+            "    background:#ef8201;\n" +
+            "    border-radius:10px;\n" +
+            "    color:#fff;\n" +
+            "    padding:5px 10px;'>" + message +"</span></div>" ;
           Words.innerHTML = Words.innerHTML + str;
           this.axios.get('http://127.0.0.1:4000/forward',{
-            'params':message
+            params:{
+              'Text':message
+            }
           }).then((res)=>{
-            console.log(res.data)
+            let responsemessage = res.data.fulfillment_text
+            str = '<div class="atalk" style="margin:10px 50px 10px 10px;"><span id="asay" style="display:inline-block;\n' +
+              '    background:#0181cc;\n' +
+              '    border-radius:10px;\n' +
+              '    color:#fff;\n' +
+              '    padding:5px 10px;">' + responsemessage +'</span></div>';
+
+            Words.innerHTML = Words.innerHTML + str;
           })
         }
       }
@@ -173,7 +186,7 @@
     margin-left:10px;
   }
   .atalk{
-    margin:10px;
+    margin:10px 50px 10px 10px;
   }
   .atalk span{
     display:inline-block;
@@ -183,7 +196,7 @@
     padding:5px 10px;
   }
   .btalk{
-    margin:10px;
+    margin:10px 10px 10px 50px;
     text-align:right;
   }
   .btalk span{

@@ -54,7 +54,7 @@ def results():
         returnList=response.json()[:5]
         returnString=''
         for news in returnList:
-            newsString=f"Title: {news['newsTitle']}\nUrl: {news['newsUrl']}\n=====================\n"
+            newsString=f"Title: {news['newsTitle']}\nUrl: {news['newsUrl']}\n===================\n"
             returnString+=newsString
         print(returnString)
         return {'fulfillmentText': returnString}
@@ -82,7 +82,7 @@ def results():
                     break
                 if keyword in post['title']:
                     relatedPosts.append(post)
-                    postString=f"Title: {post['title']}\n Content: {post['content']}\nUrl: http://127.0.0.1:5000/posts/{post['postId']}\n"
+                    postString=f"Title: {post['title']}\n Content: {post['content']}\nUrl: http://localhost:8080/detailpage/posts/{post['postId']}\n===================\n"
                     returnString+=postString
         if returnString=='':
             return {'fulfillmentText': f"Sorry, no post related with {Question} cannot be found, please try again"}
@@ -100,7 +100,7 @@ def results():
                 break
             if Tag in post['tags']:
                 relatedPosts.append(post)
-                postString = f"Title: {post['title']}\n Content: {post['content']}\nUrl: http://127.0.0.1:5000/posts/{post['postId']}\n"
+                postString = f"Title: {post['title']}\n Content: {post['content']}\nUrl: http://localhost:8080/detailpage/{post['postId']}\n===================\n"
                 returnString += postString
         if returnString=='':
             return {'fulfillmentText': f"Sorry, no post tagged with {Tag} cannot be found, please try again"}
@@ -122,15 +122,15 @@ def results():
         response_order = send_request(request_order)
 
         if response_order['all_result'] == []:
-            return {'fulfillmentText': f'There is no {phase} course called {CourseCode} in term {Term}, please try again.'}
+            return {'fulfillmentText': f'There is no {phase} course called {CourseCode} in {Term}, please try again.'}
         capacity = response_order['all_result'][0][7]
         capacity_cur,capacity_max=capacity.split(' / ')
         capacity_cur=int(capacity_cur)
         capacity_max=int(capacity_max)
         if capacity_cur==capacity_max:
-            return {'fulfillmentText': f'{capacity} students is enrolling in {CourseCode} of term {Term} in 2020.\n It\'s full, do you want to subscribe this course? We can send email notification once there are space in the course'}
+            return {'fulfillmentText': f'{capacity} students is enrolling in {CourseCode} of {Term} in 2020.\n It\'s full, do you want to subscribe this course? We can send email notification once there are space in the course'}
         else:
-            return {'fulfillmentText': f'{capacity} students is enrolling in {CourseCode} of term {Term} in 2020. There are still some space in this course.'}
+            return {'fulfillmentText': f'{capacity} students is enrolling in {CourseCode} of {Term} in 2020. There are still some space in this course.'}
     if intent == 'CheckCourseCapacity - yes':
         print(req)
         email=req['queryResult']['outputContexts'][0]['parameters']['email']

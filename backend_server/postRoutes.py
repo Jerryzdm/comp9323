@@ -187,3 +187,21 @@ class CreatePost(Resource):
             return {"t": "input"}, 400
         return {'pid': new_post.postId,
                }, 201
+
+@api.route('/search/<string:key>')
+class Search(Resource):
+    @api.doc(
+        description="search post by key word")
+    def get(self,key):
+            result = []
+
+            try:
+                lists = Post.query.filter(Post.title.ilike("%" + key + "%")).order_by(desc(Post.date)).all()
+                for course in lists:
+                    result.append(jsontifyPost(course))
+                lists = Post.query.filter(Post.content.ilike("%" + key + "%")).order_by(desc(Post.date)).all()
+                for course in lists:
+                    result.append(jsontifyPost(course))
+            except:
+                return {"message": "bad payload"}, 400
+            return result, 200

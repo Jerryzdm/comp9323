@@ -88,6 +88,48 @@ class Reg(Resource):
                    'refresh_token': refresh_token
                }, 201
 
+@api.route('/update')
+class Update(Resource):
+    @api.expect(reg_forms)
+    @api.doc(description="undate")
+    @jwt_required
+    @api.param("Authorization", _in='header')
+    def post(self):
+        try:
+            current_user = get_jwt_identity()
+            user  = User.query.filter_by(username=current_user).first()
+        except:
+            return {"message": "token"}, 400
+        try:
+            r = request.data.decode()
+            print(json.loads(r))
+            username = json.loads(r)["username"]
+            password = json.loads(r)["password"]
+            faculty = json.loads(r)["faculty"]
+            user_type = json.loads(r)["user_type"]
+            eamil = json.loads(r)["email"]
+        except:
+            return {"message": "wrong payload"}, 400
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            return {"message": "wrong username"}, 400
+        user.username = username
+        user.password = password
+        user.faculty = faculty
+        user.user_type = user_type
+        user.email = eamil
+        db.session.commit()
+        access_token = create_access_token(identity=json.loads(r)["username"])
+        refresh_token = create_refresh_token(identity=json.loads(r)["username"])
+        access_jti = get_jti(encoded_token=access_token)
+        refresh_jti = get_jti(encoded_token=refresh_token)
+        revoked_store.set(access_jti, 'false', ACCESS_EXPIRES * 1.2)
+        revoked_store.set(refresh_jti, 'false', REFRESH_EXPIRES * 1.2)
+        return {
+                   'access_token': access_token,
+                   'refresh_token': refresh_token
+               }, 200
+
 
 class LogOut(Resource):
     @jwt_required

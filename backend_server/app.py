@@ -7,11 +7,7 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flask_script import Manager, Shell
 from flask_mail import Mail, Message
-
 import redis
-
-
-from forms import *
 api: Api = Api(
     title='Campus Guide',
     version='1.0',

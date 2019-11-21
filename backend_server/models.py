@@ -54,6 +54,7 @@ class Review(db.Model):
     __tablename__ = 'reviews'
     reviewId = Column(Integer,primary_key=True,autoincrement=True)
     authorId = Column(Integer)
+    sentiment = Column(Integer)
     content = Column(Text)
     date = Column(DateTime, default=datetime.now)
     authorType = Column(Integer, default=0)

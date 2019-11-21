@@ -15,6 +15,7 @@ from flask_jwt_extended import (
 from flask_script import Manager, Shell
 from flask_mail import Mail, Message
 from app import app, mail
+from reviewAnalyzer import predict_sentiment
 
 
 api = Namespace('course', description='course operations')
@@ -112,6 +113,7 @@ def commentExporter(comment):
             "authorId": comment.authorId,
             "content": comment.content,
             "date": comment.date.timestamp(),
+            "sentiment": comment.sentiment,
             "authorType": comment.authorType,
             "authorName": comment.authorName,
             "reply_to": comment.reply_to
@@ -147,6 +149,7 @@ class CourseSubscribe(Resource):
             comment.authorName = current_user
             comment.authorId = author.id
             comment.content = r['content']
+            comment.sentiment = predict_sentiment(r['content'])
             comment.reply_to = r['reply_to']
             db.session.add(comment)
             db.session.commit()

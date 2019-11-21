@@ -11,14 +11,11 @@
         :pagination="pagination"
         :dataSource="postdata"
       >
-        <a-list-item slot="renderItem" slot-scope="item, index">
+        <a-list-item slot="renderItem" slot-scope="item, index" >
           <a slot="actions">details</a>
           <a slot="actions" @click="delete_comment(item)">delete</a>
-
           <a-list-item-meta
-            :description="item.content"
-          >
-
+            :description="item.content"  >
           </a-list-item-meta>
           <div>{{item.date|dateformat('YYYY-MM-DD')}}</div>
         </a-list-item>
@@ -31,47 +28,49 @@
 <script>
   import Cookies from 'js-cookie'
   import LoginHeader from "./../components/LoginHeader"
+
   export default {
     components: {LoginHeader},
     data() {
       return {
-        postdata:[],
+        postdata: [],
         pagination: {
           pageSize: 5,
-          showTotal: total => total > 1 ? 'Total ' + total + ' news' : 'Total ' + total + ' news'
+          showTotal: total => total > 1 ? 'Total ' + total + ' posts' : 'Total ' + total + ' post'
         },
       }
     },
-    methods:{
-      delete_comment(item){
-        this.axios.delete('/comments/'+item.commentId,{
-          data:{
-            'content':item.content,
-            'reply_to':item.reply_to
+    methods: {
+      /*delete de cpmment*/
+      delete_comment(item) {
+        this.axios.delete('/comments/' + item.commentId, {
+          data: {
+            'content': item.content,
+            'reply_to': item.reply_to
           },
-          headers:{
-            'Authorization':Cookies.get('access_token')
+          headers: {
+            'Authorization': Cookies.get('access_token')
           }
-        }).then((res)=>{
-          this.axios.get("/comments/users/"+Cookies.get("uid"),{
-            headers:{
-              'Authorization':Cookies.get('access_token')
+        }).then((res) => {
+          this.axios.get("/comments/users/" + Cookies.get("uid"), {
+            headers: {
+              'Authorization': Cookies.get('access_token')
             }
-          }).then((res_delete)=>{
+          }).then((res_delete) => {
             this.postdata = res_delete.data
             console.log(res_delete.data)
           })
           this.$message.success('Deleting successfully!');
-          console.log('删除成功')
+          console.log('delete successfully')
         })
       }
     },
     mounted() {
-      this.axios.get("/comments/users/"+Cookies.get("uid"),{
-        headers:{
-          'Authorization':Cookies.get('access_token')
+      this.axios.get("/comments/users/" + Cookies.get("uid"), {
+        headers: {
+          'Authorization': Cookies.get('access_token')
         }
-      }).then((res)=>{
+      }).then((res) => {
         this.postdata = res.data
         console.log(res.data)
       })

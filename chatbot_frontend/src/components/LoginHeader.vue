@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--if not login show the login/sign up button-->
     <a-row class="btn-header" type="flex" justify="end">
       <a-button v-if="!user_show" class="btn-login" v-on:click="showlogin" :size="size">Log in</a-button>
       <a-button v-if="!user_show" v-on:click="showsignup" :size="size">Sign up</a-button>
@@ -11,6 +12,9 @@
           <span v-text="show_username"/>
           <!--<a-icon type="down"/>-->
         </a>
+
+
+        <!--if login, display the dropdown menu-->
         <a-menu slot="overlay">
           <a-menu-item>
             <a href="javascript:; " v-on:click="myprofile">My profile</a>
@@ -23,26 +27,18 @@
           </a-menu-item>
         </a-menu>
       </a-dropdown>
-      <a-button  v-on:click="showchatbot" :size="size" style="margin-left: 20px">ChatBot</a-button>
     </a-row>
 
     <!--login pop-up windows-->
-    <a-modal title="Login" v-model="login_visible" @ok="handleLogin" okText="Login" >
+    <a-modal title="Login" v-model="login_visible" @ok="handleLogin" okText="Login">
       <label>Username</label>
       <a-input size="large" v-model="username"></a-input>
       <label>Password</label>
       <a-input size="large" type="password" v-model="password"></a-input>
     </a-modal>
-    <a-modal  v-model="chatbot_visible" @ok="handleClose" okText="Close" footer='' >
-    <iframe
-      allow="microphone;"
-      width="450px"
-      height="450px"
-      src="https://console.dialogflow.com/api-client/demo/embedded/bc743cc1-7917-475d-bd5e-8260fcf5e126">
-    </iframe>
-    </a-modal>
+
     <!--sign up pop-up windows-->
-    <a-modal title="Sign up" v-model="signup_visible" @ok="handleSignup" okText="Sign up" >
+    <a-modal title="Sign up" v-model="signup_visible" @ok="handleSignup" okText="Sign up">
       <label>Email address</label>
       <a-input size="large" v-model="sign_email"></a-input>
       <label>Username</label>
@@ -70,18 +66,18 @@
       return {
         size: 'large',
         username: '',
-        show_username:Cookies.get('username'),
-        password:'',
+        show_username: Cookies.get('username'),
+        password: '',
         user_show: false,
-        login_visible:false,
-        signup_visible:false,
-        sign_email:'',
-        sign_username:'',
-        sign_faculty:'',
-        sign_user_type:'',
-        sign_password:'',
-        sign_confirmpassword:'',
-        chatbot_visible:false
+        login_visible: false,
+        signup_visible: false,
+        sign_email: '',
+        sign_username: '',
+        sign_faculty: '',
+        sign_user_type: '',
+        sign_password: '',
+        sign_confirmpassword: '',
+
       }
     },
     methods: {
@@ -97,26 +93,32 @@
 
       /*go to home page*/
       homepage() {
-        if(this.$route.path !== '/'){
+        if (this.$route.path !== '/') {
           this.$router.push('/')
         }
       },
       /*logout and clear cookies*/
       logout() {
-
+        this.axios.delete('/auth/logout',{
+          headers: {
+            'Authorization': Cookies.get('access_token')
+          }
+        }).then((res)=>{
+          console.log('logout')
+        })
         Cookies.remove('access_token')//remove cookies
         Cookies.remove('username')
         Cookies.remove('uid')
         this.username = ''
         this.user_show = false
         //sessionStorage.removeItem('userinfo')//remove user information
-        if(this.$route.path === '/myprofile'){
+        if (this.$route.path === '/myprofile') {
           this.$router.push('/')
         }
       },
       /*Determine if it's logged in*/
       isLogin() {
-        if (Cookies.get('access_token') ) {
+        if (Cookies.get('access_token')) {
           this.user_show = true
           this.show_username = Cookies.get('username')
         } else {
@@ -125,38 +127,36 @@
       },
       /*go to profile page*/
       myprofile() {
-        if(this.$route.path !== '/myprofile'){
+        if (this.$route.path !== '/myprofile') {
           this.$router.push('/myprofile')
         }
       },
-      showchatbot(){
-        this.chatbot_visible = true
-      },
+
 
       //todo
-      handleLogin(){
-        this.axios.post("/auth/login",{
-          "username":this.username,
-          "password":this.password
-        }).then((response)=>{
+      /*check username and password*/
+      handleLogin() {
+        this.axios.post("/auth/login", {
+          "username": this.username,
+          "password": this.password
+        }).then((response) => {
           console.log(this.username)
-          if(response.status === 200){
-            Cookies.set("access_token",'Bearer '+response.data.access_token)
-            Cookies.set("username",this.username)
-            Cookies.set("uid",response.data.uid)
+          if (response.status === 200) {
+            Cookies.set("access_token", 'Bearer ' + response.data.access_token)
+            Cookies.set("username", this.username)
+            Cookies.set("uid", response.data.uid)
             console.log(Cookies.get("access_token"))
-            console.log('登陆成功')
             this.user_show = true
             this.show_username = this.username
             this.username = ''
             this.password = ''
-          }else{
+          } else {
             this.$message.error('Username or password is wrong!');
             this.username = ''
             this.password = ''
           }
           this.login_visible = false;
-        }).catch((e)=>{
+        }).catch((e) => {
           this.$message.error('Username or password is wrong!');
           this.username = ''
           this.password = ''
@@ -164,17 +164,17 @@
 
       },
       //todo
-      handleSignup(){
-        if(this.sign_password === this.sign_confirmpassword){
-          this.axios.post("/auth/signup",{
-            "email":this.sign_email,
-            "username":this.sign_username,
-            "password":this.sign_password,
-            "faculty":this.sign_faculty,
-            "user_type":this.sign_user_type,
-          }).then((res)=>{
-            if(res.status === 201){
-              console.log("创建成功")
+      /*sign up account*/
+      handleSignup() {
+        if (this.sign_password === this.sign_confirmpassword) {
+          this.axios.post("/auth/signup", {
+            "email": this.sign_email,
+            "username": this.sign_username,
+            "password": this.sign_password,
+            "faculty": this.sign_faculty,
+            "user_type": this.sign_user_type,
+          }).then((res) => {
+            if (res.status === 201) {
               this.user_show = true
             }
             this.signup_visible = false;
@@ -184,7 +184,7 @@
             this.sign_password = ''
             this.sign_faculty = ''
             this.sign_confirmpassword = ''
-          }).catch((e)=>{
+          }).catch((e) => {
             this.$message.error('Username has been used!');
             this.sign_user_type = ''
             this.sign_email = ''
@@ -193,7 +193,7 @@
             this.sign_faculty = ''
             this.sign_confirmpassword = ''
           })
-        }else{
+        } else {
           this.$message.error('Passwords are not same!');
           console.log("password are not same")
           this.sign_user_type = ''
@@ -203,20 +203,18 @@
           this.sign_faculty = ''
           this.sign_confirmpassword = ''
         }
-
-
       },
-      handleClose(){
-        this.chatbot_visible = false
-      }
+
+
 
     },
     mounted: function () {
+      /*check if the user has logged in*/
       this.isLogin();
-      if (Cookies.get('access_token') ) {
+      if (Cookies.get('access_token')) {
         this.user_show = true
         this.show_username = Cookies.get('username')
-        console.log('yonghuming'+Cookies.get('username'))
+        //console.log('yonghuming' + Cookies.get('username'))
       } else {
         this.user_show = false
       }

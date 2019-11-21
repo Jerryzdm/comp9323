@@ -4,7 +4,8 @@
     <div style="background-color: #ececec;height: 45px;width: 100%;text-align: left">
       <h2 style="padding: 6px 12px 0 12px;color: #484848">Course</h2>
     </div>
-    <a-list :grid="{ gutter: 16, column: 3 }" :dataSource="data" style="margin-top: 20px;margin-right: 20px;margin-left: 20px">
+    <a-list :grid="{ gutter: 16, column: 3 }" :dataSource="data"
+            style="margin-top: 20px;margin-right: 20px;margin-left: 20px">
       <a-list-item slot="renderItem" slot-scope="item, index">
         <a-card :title="item.title">
           <a slot="actions">Details</a>
@@ -14,9 +15,8 @@
     </a-list>
 
 
-
     <!--  reviews pop up window-->
-    <a-modal title="Reviews" v-model="course_visible" @ok="handleOk" okText="Close" >
+    <a-modal title="Reviews" v-model="course_visible" @ok="handleOk" okText="Close">
 
       <a-list
         itemLayout="horizontal"
@@ -41,7 +41,7 @@
             <a-textarea :rows="4" @change="handleChange" :value="value"></a-textarea>
           </a-form-item>
           <a-form-item>
-            <a-button  @click="handleSubmit" type="primary">
+            <a-button @click="handleSubmit" type="primary">
               Add Comment
             </a-button>
           </a-form-item>
@@ -52,7 +52,12 @@
 </template>
 
 <script>
-  const data1 =[{id:'1',title:'title',time:'time',number:'number'},{id:'2',title:'title2',time:'time2',number:'number2'}]
+  const data1 = [{id: '1', title: 'title', time: 'time', number: 'number'}, {
+    id: '2',
+    title: 'title2',
+    time: 'time2',
+    number: 'number2'
+  }]
   const data = [
     {
       title: 'COMP9021',
@@ -68,30 +73,30 @@
     },
   ];
   export default {
-    data(){
-      return{
+    data() {
+      return {
         data1,
         data,
         pagination: {
           pageSize: 5,
           showTotal: total => total > 1 ? 'Total ' + total + ' courses' : 'Total ' + total + ' course'
         },
-        course_visible:false,
-        value:'',
+        course_visible: false,
+        value: '',
       }
     },
-    methods:{
-      show_reviews(title){
+    methods: {
+      show_reviews(title) {
         console.log(title)
         this.course_visible = true
       },
-      handleOk(){
+      handleOk() {
         this.course_visible = false
       },
-      handleChange(){
+      handleChange() {
 
       },
-      handleSubmit(){
+      handleSubmit() {
 
       }
     }

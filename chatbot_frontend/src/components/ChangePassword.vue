@@ -47,11 +47,11 @@
         <a-button type="danger" :size="size" v-on:click="update_pwd">Update password</a-button>
       </div>
     </a-spin>
+    <!--modal to give show wrong message-->
     <a-modal
       title="Wrong message"
       v-model="visible"
-      @ok="handleOk"
-    >
+      @ok="handleOk">
       <p>{{wrong_msg}}</p>
     </a-modal>
   </div>
@@ -74,8 +74,9 @@
       }
     },
     methods: {
+      /*make the modal unvisible*/
       handleOk(e) {
-        console.log(e);
+        //console.log(e);
         this.visible = false
       },
       /*update password*/
@@ -116,11 +117,11 @@
           }).catch((e) => {
             this.spinning = false
             this.visible = true
-            if(e.response.data["msg"]){
+            if (e.response.data["msg"]) {
               this.wrong_msg = e.response.data["msg"]
-            }else if(e.response.data['errors']){
+            } else if (e.response.data['errors']) {
               this.wrong_msg = e.response.data["errors"]
-            }else{
+            } else {
               this.wrong_msg = "Bad request"
             }
           })

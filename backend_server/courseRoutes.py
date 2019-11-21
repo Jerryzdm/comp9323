@@ -104,7 +104,56 @@ class CourseSubscribe(Resource):
         except:
             return {"message": "bad payload"}, 400
 
+resource_fields = api.model('commsnts_form', commsnts_form)
 
+
+def commentExporter(comment):
+    return {"reviewId": comment.reviewId,
+            "authorId": comment.authorId,
+            "content": comment.content,
+            "date": comment.date.timestamp(),
+            "authorType": comment.authorType,
+            "authorName": comment.authorName,
+            "reply_to": comment.reply_to
+            }
+@api.route('/<int:cid>/reviews')
+class CourseSubscribe(Resource):
+
+    def get(self,cid):
+        result = []
+        try:
+            comment_list = Review.query.filter_by(reply_to=cid)
+            for comment in comment_list:
+                result.append(commentExporter(comment))
+        except:
+            return {"message": "bad payload"}, 400
+        return result, 200
+
+    @jwt_required
+    @api.param("Authorization", _in='header')
+    @api.doc(description="to add a review to a course")
+    @api.expect(resource_fields)
+    def post(self, cid):
+        try:
+            r = request.data.decode()
+            r = json.loads(r)
+            current_user = get_jwt_identity()
+        except:
+            return {"message": "token"}, 400
+        author = User.query.filter_by(username=current_user).first()
+
+        try:
+            comment = Review()
+            comment.authorName = current_user
+            comment.authorId = author.id
+            comment.content = r['content']
+            comment.reply_to = r['reply_to']
+            db.session.add(comment)
+            db.session.commit()
+            db.session.refresh(comment)
+        except:
+            return {"message": "bad payload"}, 400
+        return {"cid": comment.reviewId}, 201
 
 
 class CourseList(Resource):

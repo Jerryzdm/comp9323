@@ -42,13 +42,24 @@ class Post(db.Model):
 
 class Comment(db.Model):
     __tablename__ = 'comments'
-    commentId = Column(Integer,primary_key=True)
+    commentId = Column(Integer,primary_key=True,autoincrement=True)
     authorId = Column(Integer)
     content = Column(Text)
     date = Column(DateTime, default=datetime.now)
     authorType = Column(Integer, default=0)
     authorName = Column(String(64))
     reply_to = Column(Integer)
+
+class Review(db.Model):
+    __tablename__ = 'reviews'
+    reviewId = Column(Integer,primary_key=True,autoincrement=True)
+    authorId = Column(Integer)
+    content = Column(Text)
+    date = Column(DateTime, default=datetime.now)
+    authorType = Column(Integer, default=0)
+    authorName = Column(String(64))
+    reply_to = Column(Integer)
+
 
 class Course(db.Model):
     __tablename__ = 'courses'

@@ -8,24 +8,32 @@ from flask_cors import CORS
 from flask_script import Manager, Shell
 from flask_mail import Mail, Message
 import redis
+
+#set swagger info
 api: Api = Api(
     title='Campus Guide',
     version='1.0',
     description='v1.0',
 )
 app = Flask(__name__)
+#set key
 app.config["SECRET_KEY"] = '765 PRODUCTION'
 app.config.from_object(Config)
 api.init_app(app)
+#ling database
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+#add mail support
 mail = Mail(app)
 
+
 jwt = JWTManager(app)
+
 CORS(app)
 revoked_store = redis.StrictRedis(host='localhost', port=6379, db=0,
                                   decode_responses=True)
 @jwt.token_in_blacklist_loader
+
 def check_if_token_is_revoked(decrypted_token):
     jti = decrypted_token['jti']
     entry = revoked_store.get(jti)

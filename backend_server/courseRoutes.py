@@ -15,7 +15,7 @@ from flask_jwt_extended import (
 from flask_script import Manager, Shell
 from flask_mail import Mail, Message
 from app import app, mail
-from reviewAnalyzer import predict_sentiment
+#from reviewAnalyzer import predict_sentiment
 
 
 api = Namespace('course', description='course operations')
@@ -149,7 +149,8 @@ class CourseSubscribe(Resource):
             comment.authorName = current_user
             comment.authorId = author.id
             comment.content = r['content']
-            comment.sentiment = predict_sentiment(r['content'])
+            #comment.sentiment = predict_sentiment(r['content'])
+            comment.sentiment = 1
             comment.reply_to = r['reply_to']
             db.session.add(comment)
             db.session.commit()

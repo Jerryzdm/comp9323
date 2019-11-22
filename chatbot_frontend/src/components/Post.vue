@@ -7,6 +7,14 @@
     </div>
     <div style="clear: both;"></div>
 
+
+    <!--search component-->
+    <div style="padding: 10px 20px;text-align: center">
+      <a-input placeholder="search post" v-model="search_post"
+               style="float: left;width: 60%;margin-left: 15%"></a-input>
+      <a-button style="float: left;margin-left: 5px" @click="searchPost">Search</a-button>
+      <div style="clear: both"></div>
+    </div>
     <div style="margin: 20px">
       <template v-for=" tag in tags">
         <a-checkable-tag
@@ -117,7 +125,8 @@
         content: '',
         addtag: ['food'],
         review: '',
-        all_review: []
+        all_review: [],
+        search_post:''
 
       }
     },
@@ -133,8 +142,25 @@
         })*/
         this.$router.push({name: 'DetailPage', params: {post_id: id}})
       },
-
-
+      searchPost(){
+        if (this.search_post !== '') {
+          this.axios.get('/posts/search/' + this.search_post).then((res) => {
+            this.postdata = res.data
+          })
+        } else {
+          this.allPost()
+        }
+      },
+      allPost(){
+        /*get all the post*/
+        this.axios.get("/posts/all").then((res) => {
+          if (res.status === 201) {
+            this.postdata = res.data
+            this.postdata_tmp = res.data
+            console.log(res)
+          }
+        })
+      },
       handleOk() {
         this.post_visible = false
       },
@@ -203,14 +229,7 @@
 
     },
     mounted() {
-      /*get all the post*/
-      this.axios.get("/posts/all").then((res) => {
-        if (res.status === 201) {
-          this.postdata = res.data
-          this.postdata_tmp = res.data
-          console.log(res)
-        }
-      })
+      this.allPost()
     }
   }
 </script>

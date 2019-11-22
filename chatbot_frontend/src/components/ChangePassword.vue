@@ -6,13 +6,13 @@
       <h2 style="padding: 6px 12px 0 12px;color: #484848">Change Your Password</h2>
     </div>
     <a-spin :spinning="spinning" tip="Loading...">
-      <!--old password-->
+      <!--username-->
       <div>
         <div style="width: 30%;float: left; margin-top: 30px;text-align: right;">
-          <label class="text-left">Old password</label>
+          <label class="text-left">Username</label>
         </div>
         <div style="float:left;text-align: left;width: 60%">
-          <input class="text-right" name="oldPassword" type="password" v-model="oldPassword"></input>
+          <input class="text-right" v-model="username" disabled></input>
         </div>
         <div style="clear: left"></div>
 
@@ -21,22 +21,44 @@
       <!--new password-->
       <div>
         <div style="width: 30%;float: left; margin-top: 30px;text-align: right;">
-          <label class="text-left">New password</label>
+          <label class="text-left">Password</label>
         </div>
         <div style="float:left;text-align: left;width: 60%">
-          <input class="text-right" name="newPassword" type="password" v-model="newPassword"></input>
+          <input class="text-right"  type="password" v-model="newPassword"></input>
         </div>
 
         <div style="clear: left"></div>
       </div>
 
-      <!--Confirm  password-->
+      <!--Faculty-->
       <div>
         <div style="width: 30%;float: left; margin-top: 30px;text-align: right;">
-          <label class="text-left">Confirm password</label>
+          <label class="text-left">Faculty</label>
         </div>
         <div style="float:left;text-align: left;width: 60%">
-          <input class="text-right" type="password" name="confirmPassword" v-model="confirmPassword"></input>
+          <input class="text-right"  v-model="faculty"></input>
+        </div>
+        <div style="clear: left"></div>
+      </div>
+
+      <!--User type-->
+      <div>
+        <div style="width: 30%;float: left; margin-top: 30px;text-align: right;">
+          <label class="text-left">User type</label>
+        </div>
+        <div style="float:left;text-align: left;width: 60%">
+          <input class="text-right"  v-model="user_type"></input>
+        </div>
+        <div style="clear: left"></div>
+      </div>
+
+      <!--Email-->
+      <div>
+        <div style="width: 30%;float: left; margin-top: 30px;text-align: right;">
+          <label class="text-left">Email</label>
+        </div>
+        <div style="float:left;text-align: left;width: 60%">
+          <input class="text-right"  v-model="email"></input>
         </div>
         <div style="clear: left"></div>
       </div>
@@ -44,7 +66,7 @@
 
       <a-divider></a-divider>
       <div style="text-align: right;margin-right: 20px">
-        <a-button type="danger" :size="size" v-on:click="update_pwd">Update password</a-button>
+        <a-button type="danger" :size="size" v-on:click="update_profile">Update profile</a-button>
       </div>
     </a-spin>
     <!--modal to give show wrong message-->
@@ -65,8 +87,10 @@
     data() {
       return {
         newPassword: '',
-        confirmPassword: '',
-        oldPassword: '',
+        username:'',
+        faculty:'',
+        user_type:'',
+        email:'',
         size: 'large',
         visible: false,
         wrong_msg: "",
@@ -80,65 +104,35 @@
         this.visible = false
       },
       /*update password*/
-      update_pwd() {
-        //const userinfo1 = JSON.parse(sessionStorage.getItem('userinfo'))
-        if (this.newPassword.length >= 8 && this.confirmPassword.length >= 8 && (this.newPassword === this.confirmPassword)) {
-          this.spinning = true
-          this.axios.put("/api/user/password", {
-            token: Cookies.get('token'),
-            old_password: this.oldPassword,
-            new_password: this.newPassword,
-          }).then((response) => {
-            if (response.status === 200) {
-              this.$notification["success"]({
-                message: 'Success',
-                description: 'Congratulations, change password successfully.Please login with new password.',
-                duration: 2,
-              });
-              this.axios.post('/api/logout', {
-                token: Cookies.get('token')
-              }).then((response) => {
-                if (response.status === 200) {
-                  Cookies.remove('username')//remove cookies
-                  Cookies.remove('user_id')
-                  Cookies.remove('email')
-                  Cookies.remove('token')
-                  sessionStorage.removeItem('userinfo')//remove user information
-                  this.username = ''
-                  this.$router.push('/')
-                } else {
-                  console.log(response)
-                }
-              }).catch(function (e) {
-                console.log(e)
-              })
-            }
-            this.spinning = false
-          }).catch((e) => {
-            this.spinning = false
-            this.visible = true
-            if (e.response.data["msg"]) {
-              this.wrong_msg = e.response.data["msg"]
-            } else if (e.response.data['errors']) {
-              this.wrong_msg = e.response.data["errors"]
-            } else {
-              this.wrong_msg = "Bad request"
-            }
-          })
-        } else if (this.oldPassword === '') {
-          this.visible = true
-          this.wrong_msg = "Old password can not be empty"
-        } else if (this.newPassword === '' || this.confirmPassword.length < 8) {
-          this.visible = true
-          this.wrong_msg = "New password can not be empty or less than 8 characters"
-        } else if (this.confirmPassword === '' || this.confirmPassword.length < 8) {
-          this.visible = true
-          this.wrong_msg = "Confirm password can not be empty or less than 8 characters"
-        } else if (this.newPassword !== this.confirmPassword) {
-          this.visible = true
-          this.wrong_msg = "New password is different from confirm password"
-        }
+      update_profile() {
+        this.axios.post('/auth/update',{
+          'username':this.username,
+          'password':this.newPassword,
+          'faculty':this.faculty,
+          'user_type':this.user_type,
+          'email':this.email
+        },{
+          headers: {
+            'Authorization': Cookies.get('access_token')
+          }
+        }).then((res)=>{
+          this.$message.success('Update successfully.')
+        })
+      },
+      get_info(){
+
+        this.axios.get('/auth/users/'+Cookies.get('uid')).then((res)=>{
+          let data = res.data
+          this.username = data.username
+          this.faculty = data.faculty
+          this.user_type = data.user_type
+          this.email = data.email
+          this.newPassword = '123456'
+        })
       }
+    },
+    mounted() {
+      this.get_info()
     }
   }
 </script>

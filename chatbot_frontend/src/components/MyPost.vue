@@ -12,15 +12,19 @@
         :dataSource="postdata"
       >
         <a-list-item slot="renderItem" slot-scope="item, index" >
-          <a slot="actions">details</a>
+          <a slot="actions" @click="details(item.content)">details</a>
           <a slot="actions" @click="delete_comment(item)">delete</a>
           <a-list-item-meta
-            :description="item.content"  >
+            :description="item.authorName"  >
           </a-list-item-meta>
           <div>{{item.date|dateformat('YYYY-MM-DD')}}</div>
         </a-list-item>
       </a-list>
     </div>
+
+    <a-modal v-model="visible" @ok="handleOk">
+      {{content}}
+    </a-modal>
 
   </div>
 </template>
@@ -35,9 +39,11 @@
       return {
         postdata: [],
         pagination: {
-          pageSize: 5,
+          pageSize: 10,
           showTotal: total => total > 1 ? 'Total ' + total + ' posts' : 'Total ' + total + ' post'
         },
+        content:'',
+        visible:false
       }
     },
     methods: {
@@ -63,6 +69,13 @@
           this.$message.success('Deleting successfully!');
           console.log('delete successfully')
         })
+      },
+      details(content){
+        this.content = content
+        this.visible = true
+      },
+      handleOk(){
+        this.visible = false
       }
     },
     mounted() {

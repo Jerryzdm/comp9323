@@ -4,6 +4,7 @@ from datetime import datetime
 from app import db
 from flask_login import UserMixin
 
+#db table structure
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'

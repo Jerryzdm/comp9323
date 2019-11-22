@@ -2,14 +2,14 @@ import secrets
 from models import *
 from flask_restplus import Resource, abort, reqparse, fields
 
-
+# auth, generate a token
 def gen_token():
     token = secrets.token_hex(32)
     while len(db.session.query(User).filter_by(curr_token=token).all())>0:
         token = secrets.token_hex(32)
     print(token)
     return token
-
+# verify the token
 def authorize(token):
     if not token:
         abort(403,'Unsupplied Authorization Token')

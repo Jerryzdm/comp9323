@@ -22,7 +22,7 @@ tagForm = api.model('post_form', tags_form)
 @api.route('/<int:pid>')
 class GetPost(Resource):
     @api.doc(
-        description="Import a collection from the data service\nthe <collection> is collections in url\nThe database contains a table called collections, which has five properties, the primary key type is int, the remaining properties are type text type, and the json of \"entries\" is stored as strings.")
+        description="get post by post id")
 
     def get(self,pid):
         print(pid)
@@ -45,6 +45,8 @@ class GetPost(Resource):
     @jwt_required
     @api.param("Authorization", _in='header')
     @api.expect(postForm)
+    @api.doc(
+        description="edit post by post id")
     def put(self,pid):
         print(pid)
         post = Post.query.filter_by(postId=pid).first()
@@ -112,6 +114,8 @@ def jsontifyPost(post):
 
 @api.route('/tags')
 class GetPostByTags(Resource):
+    @api.doc(
+        description="get a list post by tags")
     @api.expect(tagForm)
     def post(self):
         posts = []
@@ -137,6 +141,8 @@ class GetPostByTags(Resource):
 
 @api.route('/all')
 class GetALLPost(Resource):
+    @api.doc(
+        description="get all type of post")
     def get(self):
         posts = []
         try:
@@ -152,7 +158,8 @@ class GetALLPost(Resource):
 
 @api.route('')
 class CreatePost(Resource):
-    @api.doc(description="Import a collection from the data service\nthe <collection> is collections in url\nThe database contains a table called collections, which has five properties, the primary key type is int, the remaining properties are type text type, and the json of \"entries\" is stored as strings.")
+    @api.doc(
+        description="creat a post")
     @jwt_required
     @api.param("Authorization", _in='header')
     @api.expect(postForm)

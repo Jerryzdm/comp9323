@@ -26,6 +26,7 @@ def exportNews(news):
 
 
 class NewsList(Resource):
+    @api.doc(description="get a list of news")
     def get(self):
         result = []
         try:

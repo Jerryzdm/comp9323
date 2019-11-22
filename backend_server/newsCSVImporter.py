@@ -1,6 +1,7 @@
 import csv
 from models import *
 csvPath = 'news.csv'
+# news loader
 def newsImporter():
     with open(csvPath, newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',')

@@ -185,6 +185,8 @@ class LogOut(Resource):
     @jwt_required
     @api.doc(description="m")
     @api.param("Authorization", _in='header')
+    @api.doc(description="logout operation，revok the token")
+
     def delete(self):
         jti = get_raw_jwt()['Authorization']
         revoked_store.set(jti, 'true', timedelta(minutes=15) * 1.2)

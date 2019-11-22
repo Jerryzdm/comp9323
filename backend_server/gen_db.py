@@ -6,6 +6,7 @@ from courseCSVImporter import *
 from newsCSVImporter import *
 from postImporter import *
 
+# creat database
 db.metadata.create_all(db.engine)
 DBSession = sessionmaker(bind=db.engine)
 session = DBSession()

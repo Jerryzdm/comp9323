@@ -298,6 +298,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Using device: " + str(device))
 model = Network().to(device)
 model.load_state_dict(torch.load('model.pth'))
+model.eval()
 
 def predict_sentiment(sentence):
     tokenized = [tok for tok in sentence.split()]
@@ -305,8 +306,6 @@ def predict_sentiment(sentence):
     indexed = [mo[t.lower()] for t in tokenized if t.lower() in mo.keys()]
     if len(indexed) == 0:
         return 0.5
-
-
 
     tensor = torch.Tensor(indexed).to(device)
     tensor = tensor.unsqueeze(0)

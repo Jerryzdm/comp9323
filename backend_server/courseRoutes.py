@@ -42,6 +42,7 @@ follow_forms = api.model('follow_form', follow_form)
 
 @api.route('/<string:coursename>')
 class CourseListByName(Resource):
+    @api.doc(description="get course by name")
     def get(self,coursename):
         result = []
 
@@ -60,6 +61,7 @@ class CourseSubscribeList(Resource):
     @jwt_required
     @api.param("Authorization", _in='header')
     @api.doc(description="Get current user's subscribe list")
+
     def get(self):
         try:
             current_user = get_jwt_identity()
@@ -96,6 +98,16 @@ class CourseSubscribe(Resource):
                 new_subscribe = Subscribe()
                 new_subscribe.uid = author.id
                 new_subscribe.cid = cid
+                course = Course.query.filter(Course.courseId==cid)
+                if not course:
+                    return {"message": "no such course"}, 201
+                new_follow = Follow()
+                new_follow.username = current_user
+                new_follow.userId = author.id
+                new_follow.email = author.email
+                new_follow.courseCode = course.courseCode
+                new_follow.courseName = course.courseName
+                db.session.add(new_follow)
                 db.session.add(new_subscribe)
                 db.session.commit()
                 return {"message": "subscribed"}, 201
@@ -120,7 +132,7 @@ def commentExporter(comment):
             }
 @api.route('/<int:cid>/reviews')
 class CourseSubscribe(Resource):
-
+    @api.doc(description="get course review by course id")
     def get(self,cid):
         result = []
         try:
@@ -161,6 +173,7 @@ class CourseSubscribe(Resource):
 
 
 class CourseList(Resource):
+    @api.doc(description="get course list")
     def get(self):
         result = []
         try:
@@ -171,7 +184,6 @@ class CourseList(Resource):
         except:
             return {"message": "bad payload"}, 400
         return result,200
-
 
     @api.doc(
         description="User could follow a course\nWhen this course is available for registering\nThe user would receive an email that remind him to register.")

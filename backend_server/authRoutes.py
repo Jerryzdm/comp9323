@@ -110,6 +110,22 @@ class Reg(Resource):
                    'refresh_token': refresh_token
                }, 201
 
+@api.route('/users/<int:uid>')
+class getUsersInfo(Resource):
+    @api.doc(description="to get user information")
+    def get(self,uid):
+        user = User.query.filter_by(id=uid).first()
+        if not user:
+            return {"message": "wrong uid"}, 400
+        else:
+            return {"id":user.id,
+                    "username":user.username,
+                    "faculty":user.faculty,
+                    "user_type":user.user_type,
+                    "email":user.email
+            },200
+
+
 
 @api.route('/update')
 class Update(Resource):

@@ -20,7 +20,7 @@
               >
                 <a-menu-item key="1" @click="changepage('MyPost')">MyComment</a-menu-item>
                 <!--<a-menu-item key="2" @click="changepage('AdminCourse')">AdminCourse</a-menu-item>-->
-                <a-menu-item key="3" @click="changepage('ChangePassword')">ChangePassword</a-menu-item>
+                <a-menu-item key="3" @click="changepage('ChangePassword')">Update profile</a-menu-item>
               </a-menu>
             </a-layout-sider>
             <a-layout-content :style="{minHeight: '500px' }" :is="currentPage"></a-layout-content>

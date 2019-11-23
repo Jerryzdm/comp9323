@@ -4,7 +4,7 @@ import time
 import socket
 import http.client
 from bs4 import BeautifulSoup
-import urllib.request
+
 
 def get_html(url, data=None):
     header = {

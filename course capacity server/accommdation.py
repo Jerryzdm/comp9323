@@ -4,14 +4,6 @@ from bs4 import BeautifulSoup
 import urllib.request
 
 
-where = 'kensington' #2033 #randwick #kensington
-minPrice = '250'  #any #400
-maxPrice = '500'  #any #250
-propertyType = 'unit+apartment' #house  #unit+apartment  #townhouse  #villa
-maxBeds = '2'
-
-
-input_requset_dir = {'where':where,'minPrice':minPrice,'maxPrice':maxPrice,'propertyType':propertyType,'maxBeds':maxBeds}
 
 
 def make_url(input_requset_dir):
@@ -78,8 +70,8 @@ def get_info_house(input_requset_dir):
     return respo_info
 
 
-respo_info = get_info_house(input_requset_dir)
-print(respo_info)
+#respo_info = get_info_house(input_requset_dir)
+#print(respo_info)
 
 
 

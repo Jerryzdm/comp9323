@@ -8,6 +8,7 @@ def postImporter():
         spamreader = csv.reader(csvfile, delimiter=',')
         next(spamreader)
         for row in spamreader:
+            #new post
             new_post = Post()
             new_post.authorName = "admin"
             new_post.authorId = 1
@@ -24,6 +25,7 @@ def postImporter():
             rd.sadd(str(row[-1]), new_post.postId)
             rd.smembers(str(row[-1]))
             db.session.refresh(new_post)
+            #new comment
             comment = Comment()
             comment.authorName = "admin"
             comment.authorId = 1

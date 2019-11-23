@@ -2,6 +2,10 @@ import secrets
 from models import *
 from flask_restplus import Resource, abort, reqparse, fields
 
+
+#auth operation
+
+
 # auth, generate a token
 def gen_token():
     token = secrets.token_hex(32)

@@ -3,6 +3,7 @@ from models import *
 csvPath = 'course_info.csv'
 # import course info
 def courseImporter():
+    #read csv from file
     with open(csvPath, newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',')
         next(spamreader)

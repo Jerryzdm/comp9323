@@ -9,6 +9,7 @@ class Config():
     os.environ.get("SECRET_KEY") or "you will never guess"
     SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     JWT_SECRET_KEY = "minatoaqua"
     JWT_EXPIRATION_DELTA = datetime.timedelta(minutes=60)
     JWT_BLACKLIST_ENABLED = True

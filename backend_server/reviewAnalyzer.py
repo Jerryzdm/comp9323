@@ -1,17 +1,9 @@
-import numpy as np
 import torch
 import torch.nn as tnn
-import torch.nn.functional as F
-import torch.optim as topti
-from torchtext import data
-from torchtext.vocab import GloVe
-import re
-
-
 import re
 import dill
 from torchtext import data
-from torchtext.vocab import GloVe
+#stop words
 stop_words = ["a", "about", "above", "after", "again", "against", "ain", "all", "am", "an", "and", "any", "are", "aren",
               "aren't", "as", "at", "be", "because", "been", "before", "being", "below", "between", "both", "but", "by",
               "can", "couldn", "couldn't", "d", "did", "didn", "didn't", "do", "does", "doesn", "doesn't", "doing",
@@ -154,10 +146,6 @@ class Network(tnn.Module):
         self.dropout = tnn.Dropout(0.5)
 
     def forward(self, input, length):
-        """
-        DO NOT MODIFY FUNCTION SIGNATURE
-        Create the forward pass through the network.
-        """
         input, (h_n, h_c) = self.lstm(input, None)
         input = tnn.functional.relu(self.fc1(input))
 
@@ -223,7 +211,6 @@ class PreProcessing():
         return result
 
     def post(batch, vocab):
-        """Called after numericalization but prior to vectorization"""
         return batch
 
     text_field = data.Field(lower=True, include_lengths=True, batch_first=True, preprocessing=pre, postprocessing=post)
@@ -272,6 +259,8 @@ def pre(x):
             result.append(word)
     return result
 import numpy as np
+
+#Loading Glove Model
 def loadGloveModel(gloveFile):
     print("Loading Glove Model")
 
@@ -286,20 +275,21 @@ def loadGloveModel(gloveFile):
     print("Done.", len(model), " words loaded!")
     return model
 
-
 mo = loadGloveModel(file)
 
-
-
+#load textfild
 textField = data.Field(lower=True, include_lengths=True, batch_first=True)
 with open("TEXT.Field", "rb")as f:
     TEXT = dill.load(f)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Using device: " + str(device))
+
+#create model
 model = Network().to(device)
 model.load_state_dict(torch.load('model.pth'))
 model.eval()
 
+#predict
 def predict_sentiment(sentence):
     tokenized = [tok for tok in sentence.split()]
     tokenized = pre(tokenized)

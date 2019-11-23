@@ -1,5 +1,5 @@
 from flask_restplus import fields
-
+#this is used for define request body structure
 login_form =  {'username': fields.String(default='string: username', required=True),
         'password': fields.String(default='string: password',required=True),}
 

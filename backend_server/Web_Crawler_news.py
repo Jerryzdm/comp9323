@@ -4,7 +4,6 @@ import time
 import socket
 import http.client
 from bs4 import BeautifulSoup
-import urllib.request
 
 def get_html(url, data=None):
     header = {
@@ -58,8 +57,8 @@ def get_top_10_news_list(url,html_text):
 
         news_link = news.find('a')['href']
         imageURL = news.find('img')['src']
-        u = urllib.request.urlopen(imageURL)
-        img_bo = u.read()
+        #u = urllib.request.urlopen(imageURL)
+        #img_bo = u.read()
         news_link_combine = main_url+news_link
         title = news.find('h2',{'class':'headline'}).string
         date = news.find('div',{'class':'field-post-date'}).string
@@ -67,7 +66,7 @@ def get_top_10_news_list(url,html_text):
         standfirst = standfirst_1.find('p').string
 
         new_num = {'title':title,'date':date.strip(),'standfirst':standfirst,'link':news_link_combine,
-                   'img_bo':img_bo}
+                   'img_bo':imageURL}
 
         all_news_list['new_'+str(i-1)] = new_num
     #print(Level_6)
@@ -83,5 +82,3 @@ def return_10_news():
     #print(all_news_list)
     #print("Well done!")
     return all_news_list
-print(return_10_news())
-

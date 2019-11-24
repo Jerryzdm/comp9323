@@ -35,7 +35,7 @@ def congure_set():
     chrome_options.add_argument('--headless')
 
     chrome_options.add_argument('--disable-gpu')
-    chromedriver = "/Users/Taru/PycharmProjects/9323project/backend_server/chromedriver"
+    chromedriver = "./chromedriver"
     driver = webdriver.Chrome(chromedriver,options=chrome_options)
 
     #driver = webdriver.Chrome()

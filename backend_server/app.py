@@ -54,5 +54,4 @@ if __name__ == '__main__':
     api.add_namespace(ns3)
     api.add_namespace(ns4)
     api.add_namespace(ns5)
-
     app.run()

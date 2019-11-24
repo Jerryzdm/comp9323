@@ -215,7 +215,7 @@ def deal_order_function(request_order,driver):
 
     result_return = {'Undergraduate':[],'Postgraduate':[]}
     #print(all_result)
-    print(all_result)
+    #print(all_result)
     for i in all_result:
         if 'Undergraduate' in i:
             result_return['Undergraduate'].append(i)
@@ -223,7 +223,7 @@ def deal_order_function(request_order,driver):
             result_return['Postgraduate'].append(i)
 
     seat_list = result_return[request_order['phase']]
-    print('seat_list',seat_list)
+    #print('seat_list',seat_list)
     if seat_list == []:
 
         flag = True

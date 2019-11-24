@@ -255,6 +255,7 @@ def add_in_list(search_co_list,request_order):
         search_co_list[course_code] = {'email': [email], 'request_order': request_order,
                                        'created_time': time.time()}
     elif email not in search_co_list[course_code]['email']:
+        sendEmail('Full', course_code, email, 'comfirm_mess')
         search_co_list[course_code]['email'].append(email)
     return search_co_list
 

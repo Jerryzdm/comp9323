@@ -55,4 +55,4 @@ if __name__ == '__main__':
     api.add_namespace(ns4)
     api.add_namespace(ns5)
 
-    app.run("0.0.0.0")
+    app.run()

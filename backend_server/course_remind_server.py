@@ -212,29 +212,27 @@ def deal_order_function(request_order,driver):
     # driver.refresh()
     all_result,driver = get_capacity(course_code, term,driver)
 
-
     result_return = {'Undergraduate':[],'Postgraduate':[]}
     #print(all_result)
-
+    print(all_result)
     for i in all_result:
         if 'Undergraduate' in i:
             result_return['Undergraduate'].append(i)
         if 'Postgraduate' in i:
             result_return['Postgraduate'].append(i)
 
-
     seat_list = result_return[request_order['phase']]
-    #print('seat_list',seat_list)
+    print('seat_list',seat_list)
     if seat_list == []:
+
         flag = True
     else:
         flag = space_ava_flag(seat_list)
+        if flag == True:
+            send_email('unfull', request_order['course_code'], request_order['email'])
     result = {'flag':flag,'all_result':seat_list,'message':None}
 
     return result,driver
-
-
-
 
 
 print('server is initing!')
@@ -319,6 +317,7 @@ while True:
             response_order['message'] = 'course binded'
             print('this order is binded')
         elif request_order['query_type_flag'] == 'bind' and response_order['flag'] == True:
+
             response_order['message'] = 'space available or no that course'
             print('this order is unbinded')
         print(response_order)

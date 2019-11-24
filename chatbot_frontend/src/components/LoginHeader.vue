@@ -40,7 +40,7 @@
     <!--sign up pop-up windows-->
     <a-modal title="Sign up" v-model="signup_visible" @ok="handleSignup" okText="Sign up">
       <label>Email address</label>
-      <a-input size="large" v-model="sign_email"></a-input>
+      <a-input size="large" v-model="sign_email" type="email"></a-input>
       <label>Username</label>
       <a-input size="large" v-model="sign_username"></a-input>
       <label>Faculty</label>
@@ -133,6 +133,8 @@
       },
 
 
+
+
       //todo
       /*check username and password*/
       handleLogin() {
@@ -166,43 +168,50 @@
       //todo
       /*sign up account*/
       handleSignup() {
-        if (this.sign_password === this.sign_confirmpassword) {
-          this.axios.post("/auth/signup", {
-            "email": this.sign_email,
-            "username": this.sign_username,
-            "password": this.sign_password,
-            "faculty": this.sign_faculty,
-            "user_type": this.sign_user_type,
-          }).then((res) => {
-            if (res.status === 201) {
-              this.user_show = true
-            }
-            this.signup_visible = false;
+        var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        if(!reg.test(this.sign_email)){
+            this.$message.warning('Invalidate email.')
+            this.sign_email = ''
+        }else{
+          if (this.sign_password === this.sign_confirmpassword) {
+            this.axios.post("/auth/signup", {
+              "email": this.sign_email,
+              "username": this.sign_username,
+              "password": this.sign_password,
+              "faculty": this.sign_faculty,
+              "user_type": this.sign_user_type,
+            }).then((res) => {
+              if (res.status === 201) {
+                this.$message.success('Sign up successfully.')
+              }
+              this.signup_visible = false;
+              this.sign_user_type = ''
+              this.sign_email = ''
+              this.sign_username = ''
+              this.sign_password = ''
+              this.sign_faculty = ''
+              this.sign_confirmpassword = ''
+            }).catch((e) => {
+              this.$message.error('Username has been used!');
+              this.sign_user_type = ''
+              this.sign_email = ''
+              this.sign_username = ''
+              this.sign_password = ''
+              this.sign_faculty = ''
+              this.sign_confirmpassword = ''
+            })
+          } else {
+            this.$message.error('Passwords are not same!');
+            console.log("password are not same")
             this.sign_user_type = ''
             this.sign_email = ''
             this.sign_username = ''
             this.sign_password = ''
             this.sign_faculty = ''
             this.sign_confirmpassword = ''
-          }).catch((e) => {
-            this.$message.error('Username has been used!');
-            this.sign_user_type = ''
-            this.sign_email = ''
-            this.sign_username = ''
-            this.sign_password = ''
-            this.sign_faculty = ''
-            this.sign_confirmpassword = ''
-          })
-        } else {
-          this.$message.error('Passwords are not same!');
-          console.log("password are not same")
-          this.sign_user_type = ''
-          this.sign_email = ''
-          this.sign_username = ''
-          this.sign_password = ''
-          this.sign_faculty = ''
-          this.sign_confirmpassword = ''
+          }
         }
+
       },
 
 

@@ -16,16 +16,16 @@
       <div style="clear: both"></div>
     </div>
     <div style="margin: 20px">
-      <template v-for=" tag in tags">
-        <a-checkable-tag
-          :key="tag"
-          :checked="selectedTags.indexOf(tag) > -1"
-          @change="(checked) => handleTagChange(tag, checked)"
-        >
-          {{tag}}
-        </a-checkable-tag>
-      </template>
-    </div>
+    <template v-for=" tag in tags">
+      <a-checkable-tag
+        :key="tag"
+        :checked="selectedTags.indexOf(tag) > -1"
+        @change="(checked) => handleTagChange(tag, checked)"
+      >
+        {{tag}}
+      </a-checkable-tag>
+    </template>
+  </div>
 
     <div style="margin-top: 20px;margin-bottom: 80px">
       <a-list

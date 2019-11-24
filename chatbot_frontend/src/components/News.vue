@@ -13,6 +13,11 @@
           :description="item.newsStandfirst"
         >
           <a slot="title" :href="item.newsUrl" style="font-size: 16px;font-weight: bold">{{item.newsTitle}}</a>
+
+          <a-avatar
+            slot="avatar"
+            :src="item.newsImg"
+          />
         </a-list-item-meta>
       </a-list-item>
     </a-list>

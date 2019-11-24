@@ -47,15 +47,18 @@
             <div style="clear: left"></div>
           </div>
           <a slot="actions" :href="item.courseUrl" style="border-radius: 15px;">Details</a>
-          <a slot="actions" @click="show_reviews(item.title)" style="border-radius: 15px;">Review</a>
+          <a slot="actions" @click="show_reviews(item.courseId)" style="border-radius: 15px;">Review</a>
           <a-switch slot="actions" checkedChildren="Subscribed" unCheckedChildren="Unsubscribed" :defaultChecked="item.flag"
-                    @change="onChange(item.courseId)"/>
+                    @change="onChange(item.courseId)"  :disabled="disabled"/>
         </a-card>
       </a-list-item>
     </a-list>
 
     <!--  reviews pop up window-->
     <a-modal title="Reviews" v-model="course_visible" @ok="handleOk" okText="Close">
+      <div>
+
+      </div>
       <a-list
         itemLayout="horizontal"
         size="large"
@@ -63,11 +66,11 @@
         :dataSource="data1"
       >
         <a-list-item slot="renderItem" slot-scope="item, index">
-          <p slot="actions">{{item.number}}</p>
-          <a-list-item-meta
-            :description="item.number"
-          >
-            <p slot="title">{{item.title}}&nbsp;&nbsp;{{item.time}}</p>
+          <p slot="actions" v-if="item.sentiment = 1"><a-icon type="like" /></p>
+          <p slot="actions" v-else><a-icon type="dislike" /></p>
+          <a-list-item-meta>
+            <p slot="title"><a-icon type="user" />    {{item.authorName}}</p>
+            <p slot="description"><a-icon type="file-word" />    {{item.content}}</p>
           </a-list-item-meta>
 
         </a-list-item>
@@ -76,7 +79,7 @@
       <a-comment>
         <div slot="content">
           <a-form-item>
-            <a-textarea :rows="4" @change="handleChange" :value="value"></a-textarea>
+            <a-textarea :rows="4" @change="handleChange" v-model="review"></a-textarea>
           </a-form-item>
           <a-form-item>
             <a-button @click="handleSubmit" type="primary">
@@ -105,15 +108,22 @@
           showTotal: total => total > 1 ? 'Total ' + total + ' courses' : 'Total ' + total + ' course'
         },
         course_visible: false,
-        value: '',
+        review: '',
         search_course: '',
-        subscribedList: []
+        subscribedList: [],
+        course_Id:'',
+        data1:[],
+        disabled:true
       }
     },
     methods: {
-      show_reviews(title) {
-        console.log(title)
+      show_reviews(courseId) {
+        this.course_Id = courseId
         this.course_visible = true
+        this.axios.get('/course/'+courseId+'/reviews').then((res)=>{
+          this.data1 = res.data
+          console.log(this.data1)
+        })
       },
       handleOk() {
         this.course_visible = false
@@ -122,7 +132,24 @@
 
       },
       handleSubmit() {
-
+        if(this.review !== '' ){
+          this.axios.post('/course/'+this.course_Id+'/reviews',{
+            "content": this.review,
+            "reply_to":this.course_Id
+          },{
+            headers: {
+              'Authorization': Cookies.get('access_token')
+            }
+          }).then((res)=>{
+            this.$message.success('Add review successfully.')
+            this.course_visible = false
+          }).catch((e)=>{
+            this.$message.warning('You have not logged in.')
+            this.review =  ''
+          })
+        }else{
+          this.$message.warning('The review can not be empty.')
+        }
       },
       /*Subscribe course*/
       onChange(courseId) {
@@ -182,6 +209,7 @@
     mounted() {
       /*Execute when the page loads*/
       if (Cookies.get('access_token')) {
+        this.disabled = false
         this.axios.get('/course/subscribe', {
           headers: {
             'Authorization': Cookies.get('access_token')

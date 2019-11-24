@@ -22,10 +22,10 @@
         <a-list-item slot="renderItem" slot-scope="item, index">
           <p>{{item.date|dateformat('YYYY-MM-DD HH:mm')}}</p>
           <a-list-item-meta
-            :description="item.content"
             style="width:500px"
           >
-            <p slot="title" style="width:500px">{{item.authorName}}</p>
+            <p slot="title"><a-icon type="user" />    {{item.authorName}}</p>
+            <p slot="description"><a-icon type="file-word" />    {{item.content}}</p>
           </a-list-item-meta>
 
         </a-list-item>

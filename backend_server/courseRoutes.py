@@ -103,7 +103,7 @@ class CourseSubscribe(Resource):
                 print(course.courseCode)
                 print(course.courseName)
 
-                request_order = {'course_code': course.courseCode, 'term': 2, 'phase': 'Postgraduate',
+                request_order = {'course_code': course.courseCode, 'term': "Term2", 'phase': 'Postgraduate',
                                  'email': author.email,
                                  'query_type_flag': 'bind'}
                 response_order = send_request(request_order)

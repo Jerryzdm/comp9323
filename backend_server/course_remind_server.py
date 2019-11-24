@@ -35,7 +35,8 @@ def congure_set():
     chrome_options.add_argument('--headless')
 
     chrome_options.add_argument('--disable-gpu')
-    driver = webdriver.Chrome(options=chrome_options)
+    chromedriver = "/Users/Taru/PycharmProjects/9323project/backend_server/chromedriver"
+    driver = webdriver.Chrome(chromedriver,options=chrome_options)
 
     #driver = webdriver.Chrome()
     # driver.get('https://ssologin.unsw.edu.au/cas/login?service=https%3A%2F%2Fmy.unsw.edu.au%2Fportal%2FadfAuthentication')
@@ -343,3 +344,4 @@ while True:
         print('because courses are found, remove out them from wait list:')
         print(success_find_list)
         print(f'server has been ran {time.time() - start_time}')
+

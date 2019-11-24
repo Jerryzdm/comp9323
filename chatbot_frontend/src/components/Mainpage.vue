@@ -104,7 +104,7 @@
             "    color:#fff;\n" +
             "    padding:5px 10px;'>" + message +"</span></div>" ;
           Words.innerHTML = Words.innerHTML + str;
-          this.axios.get('http://127.0.0.1:4000/forward',{
+          this.axios.get('https://9323forward.localtunnel.me/forward',{
             params:{
               'Text':message
             }

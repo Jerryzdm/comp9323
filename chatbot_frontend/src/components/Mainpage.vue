@@ -82,16 +82,13 @@
           var Who = document.getElementById("who");
           var TalkWords = document.getElementById("talkwords");
           var TalkSub = document.getElementById("talksub");
-          //定义空字符串
           var str = "";
           var message = TalkWords.value
           if(message == ""){
-            // 消息为空时弹窗
             this.$message.warning("Message can not be empty");
             return;
           }
 
-            //如果Who.value为0n那么是 A说
            /* str = '<div class="atalk"><span id="asay">A说 :' + message +'</span></div>';*/
 
           str = "<div class='btalk' style='margin:10px 10px 10px 50px;\n" +
@@ -103,6 +100,7 @@
           Words.innerHTML = Words.innerHTML + str;
           Words.scrollTop = Words.scrollHeight;
           this.axios.get('https://9323forward.localtunnel.me/forward',{
+          //this.axios.get('http://127.0.0.1:4000/forward',{
             params:{
               'Text':message
             }
@@ -191,6 +189,7 @@
   }
   .atalk{
     margin:10px 50px 10px 10px;
+    width:348px;
   }
   .atalk span{
     display:inline-block;
@@ -202,6 +201,7 @@
   .btalk{
     margin:10px 10px 10px 50px;
     text-align:right;
+    width:348px;
   }
   .btalk span{
     display:inline-block;

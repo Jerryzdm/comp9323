@@ -13,6 +13,7 @@ import moment from 'moment'
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = "https://9323api.localtunnel.me"
+//axios.defaults.baseURL = "http://127.0.0.1:5000"
 Vue.prototype.axios = axios
 Vue.use(Antd)
 Vue.use(Cookies)

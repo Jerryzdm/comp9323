@@ -96,22 +96,25 @@ class CourseSubscribe(Resource):
                 new_subscribe = Subscribe()
                 new_subscribe.uid = author.id
                 new_subscribe.cid = cid
-                course = Course.query.filter(Course.courseId==cid)
+                course = Course.query.filter(Course.courseId==cid).first()
+                print(course)
                 if not course:
-                    return {"message": "no such course"}, 201
-                new_follow = Follow()
-                new_follow.username = current_user
-                new_follow.userId = author.id
-                new_follow.email = author.email
-                new_follow.courseCode = course.courseCode
-                new_follow.courseName = course.courseName
-                db.session.add(new_follow)
+                    return {"message": "no such course"}, 400
+                print(course.courseCode)
+                print(course.courseName)
+
+                request_order = {'course_code': course.courseCode, 'term': 2, 'phase': 'Postgraduate',
+                                 'email': author.email,
+                                 'query_type_flag': 'bind'}
+                response_order = send_request(request_order)
+
+
                 db.session.add(new_subscribe)
                 db.session.commit()
                 return {"message": "subscribed"}, 201
             else:
+                print("already subscribed")
                 return {"message": "already subscribed"}, 400
-
         except:
             return {"message": "bad payload"}, 400
 
@@ -206,7 +209,6 @@ class CourseList(Resource):
         print(new_follow.followId)
         request_order = {'course_code': new_follow.courseCode, 'term': 1, 'phase': 'Postgraduate', 'email': new_follow.email,
                          'query_type_flag': 'bind'}
-        s = time.time()
         response_order = send_request(request_order)
         return {'fid': new_follow.followId,
                }, 201

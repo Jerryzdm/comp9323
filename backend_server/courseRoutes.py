@@ -15,12 +15,10 @@ from flask_jwt_extended import (
 from flask_script import Manager, Shell
 from flask_mail import Mail, Message
 from app import app, mail
-#from reviewAnalyzer import predict_sentiment
-
+from reviewAnalyzer import predict_sentiment
+from course import *
 
 api = Namespace('course', description='course operations')
-
-
 def exportCourse(course):
     return {
         "courseId":course.courseId,
@@ -161,8 +159,8 @@ class CourseSubscribe(Resource):
             comment.authorName = current_user
             comment.authorId = author.id
             comment.content = r['content']
-            #comment.sentiment = predict_sentiment(r['content'])
-            comment.sentiment = 1
+            comment.sentiment = predict_sentiment(r['content'])
+            #comment.sentiment = 1
             comment.reply_to = r['reply_to']
             db.session.add(comment)
             db.session.commit()
@@ -206,6 +204,10 @@ class CourseList(Resource):
         db.session.commit()
         db.session.refresh(new_follow)
         print(new_follow.followId)
+        request_order = {'course_code': new_follow.courseCode, 'term': 1, 'phase': 'Postgraduate', 'email': new_follow.email,
+                         'query_type_flag': 'bind'}
+        s = time.time()
+        response_order = send_request(request_order)
         return {'fid': new_follow.followId,
                }, 201
 
@@ -215,10 +217,15 @@ def send_async_email(app, msg):
         mail.send(msg)
 
 
-def sendEmail(capacity, coursecode, email):
-    msg = Message('Registering', sender='2457937678@qq.com', recipients=[email])
-    msg.body = 'hello! The number of enrols for the course %s is %s now. It"s available for registering.' \
-               % (coursecode, capacity)
-    send_async_email(app, msg)
+def sendEmail(capacity, coursecode, email,flag):
+    if flag == 'available_mess':
+        msg = Message('Registering', sender='2457937678@qq.com', recipients=[email])
+        msg.body = 'hello! The number of enrols for the course %s is %s now. It"s available for registering.' \
+                   % (coursecode, capacity)
+        send_async_email(app, msg)
+    elif flag == 'comfirm_mess':
+        msg = Message('Registering', sender='2457937678@qq.com', recipients=[email])
+        msg.body = 'Hello! Your %s space monitoring has been confirmed now! %s has %s' % (coursecode,coursecode,capacity)
+        send_async_email(app, msg)
 
 api.add_resource(CourseList, '')

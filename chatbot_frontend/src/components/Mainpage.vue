@@ -87,7 +87,7 @@
           var message = TalkWords.value
           if(message == ""){
             // 消息为空时弹窗
-            alert("Message can not be empty");
+            this.$message.warning("Message can not be empty");
             return;
           }
 

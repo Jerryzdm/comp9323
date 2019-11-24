@@ -19,4 +19,4 @@ class Config():
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = '2457937678@qq.com'
-    MAIL_PASSWORD = 'ieuhxafpzqhadjfj'
+    MAIL_PASSWORD = 'zxwpmolzlhhnebed'

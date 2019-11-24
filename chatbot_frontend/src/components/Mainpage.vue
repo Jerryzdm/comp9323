@@ -41,17 +41,13 @@
         src="https://console.dialogflow.com/api-client/demo/embedded/bc743cc1-7917-475d-bd5e-8260fcf5e126">
       </iframe>-->
       <template>
-      <div class="talk_con">
-        <div class="talk_show" id="words">
+      <div class="talk_con" style="overflow: auto;">
+        <div class="talk_show" id="words" >
           <div class="atalk"><span id="asay">Hello</span></div>
         </div>
         <div class="talk_input">
-          <!--<select class="whotalk" id="who">
-            <option value="0">A说：</option>
-            <option value="1">B说：</option>
-          </select>-->
-          <input type="text" class="talk_word" id="talkwords">
-          <input type="button" value="send" class="talk_sub" id="talksub" @click="send">
+          <input type="text" class="talk_word" id="talkwords" v-model="inputVal" @keyup.enter="send">
+          <input type="button" value="send"  class="talk_sub" id="talksub" @click="send"  >
         </div>
       </div>
       </template>
@@ -81,6 +77,7 @@
       },
       send(){
         {
+
           var Words = document.getElementById("words");
           var Who = document.getElementById("who");
           var TalkWords = document.getElementById("talkwords");
@@ -104,7 +101,8 @@
             "    color:#fff;\n" +
             "    padding:5px 10px;'>" + message +"</span></div>" ;
           Words.innerHTML = Words.innerHTML + str;
-          this.axios.get('https://9323forward.localtunnel.me/forward',{
+          Words.scrollTop = Words.scrollHeight;
+          this.axios.get('http://127.0.0.1:4000/forward',{
             params:{
               'Text':message
             }
@@ -117,11 +115,16 @@
               '    padding:5px 10px;">' + responsemessage +'</span></div>';
 
             Words.innerHTML = Words.innerHTML + str;
+            Words.scrollTop = Words.scrollHeight;
+            this.inputVal = ''
+
           })
+          this.inputVal = ''
         }
       }
 
     },
+
     data() {
       return {
         currentPage: News,
@@ -129,6 +132,7 @@
         Post: Post,
         Course: Course,
         chatbot_visible: false,
+        inputVal:''
 
       }
     },

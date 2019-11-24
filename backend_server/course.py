@@ -28,10 +28,10 @@ def send_request(request_order):
     print('From Server:', response_order)
     clientSocket.close()
     return response_order
-"""
 
+'''
 term = 'Term2'  # 'Term1' or 'Term2' or 'Term3' or 'Summer'
-course_code = 'COMP9517'
+course_code = 'COMP9024'
 phase = 'Postgraduate' #'Undergraduate' or 'Postgraduate'
 email = 'jzoudiming@gmail.com'
 query_type_flag = 'bind'  # 'bind' or 'unbind'
@@ -41,7 +41,7 @@ s = time.time()
 response_order = send_request(request_order)
 d = time.time()-s
 print(d)
-"""
+'''
 
 
 
